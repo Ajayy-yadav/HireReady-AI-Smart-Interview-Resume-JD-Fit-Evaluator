@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Footer } from "@/components/ui/footer";
+import { Github, Hexagon, Twitter } from "lucide-react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,7 +21,34 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased`}>{children}</body>
+      <body className={`${inter.variable} antialiased`}>
+        {children}
+        <Footer
+          logo={<Hexagon className="h-10 w-10" />}
+          brandName="Awesome Corp"
+          socialLinks={[
+        {
+          icon: <Twitter className="h-5 w-5" />,
+          href: "https://twitter.com",
+          label: "Twitter",
+        },
+        {
+          icon: <Github className="h-5 w-5" />,
+          href: "https://github.com",
+          label: "GitHub",
+        },
+          ]}
+          contactEmails={[
+        { email: "mailto:support@awesomecorp.com", label: "Support" },
+        { email: "mailto:info@awesomecorp.com", label: "Info" },
+          ]}
+          copyright={{
+        text: "© 2024 Awesome Corp",
+        license: "All rights reserved",
+          }}
+        />
+      </body>
+
     </html>
   );
 }

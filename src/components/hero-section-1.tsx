@@ -171,7 +171,7 @@ export function HeroSection() {
               }}
             >
               <div className="relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
-                <div className="relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 bg-background">
+                <div className="relative mx-auto max-w-7xl  overflow-hidden rounded-2xl border p-4 bg-background">
                   <HeroVideoDialog
                     className="block dark:hidden h-auto max-h-[600px] w-full object-contain"
                     animationStyle="top-in-bottom-out"
