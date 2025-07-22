@@ -12,7 +12,6 @@ interface FooterProps {
   }>
   contactEmails: Array<{
     email: string
-    label: string
   }>
   copyright: {
     text: string
@@ -71,7 +70,7 @@ export function Footer({
                     href={`mailto:${contact.email}`}
                     className="text-sm text-primary underline-offset-4 hover:underline"
                   >
-                    {contact.label}: {contact.email}
+                     {contact.email}
                   </a>
                 </li>
               ))}

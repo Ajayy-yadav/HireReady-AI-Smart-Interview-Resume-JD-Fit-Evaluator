@@ -25,7 +25,7 @@ export default function RootLayout({
         {children}
         <Footer
           logo={<Hexagon className="h-10 w-10" />}
-          brandName="Awesome Corp"
+          brandName="Hire Ready"
           socialLinks={[
         {
           icon: <Twitter className="h-5 w-5" />,
@@ -39,11 +39,11 @@ export default function RootLayout({
         },
           ]}
           contactEmails={[
-        { email: "mailto:support@awesomecorp.com", label: "Support" },
-        { email: "mailto:info@awesomecorp.com", label: "Info" },
+        { email: "tipanaboinaajay@gmail.com" },
+        { email: "pyatlavishnuvardhan@gmail.com"},
           ]}
           copyright={{
-        text: "© 2024 Awesome Corp",
+        text: "© 2025 HireReady-AI",
         license: "All rights reserved",
           }}
         />
