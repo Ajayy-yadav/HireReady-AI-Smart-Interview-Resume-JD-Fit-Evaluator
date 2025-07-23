@@ -106,14 +106,16 @@ export function HeroSection() {
                     </div>
                   </Link>
 
-                 <h1 className="mt-8 max-w-4xl mx-auto text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem] font-semibold">
-                  Land Your Dream Role with{' '}
-                  <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                    AI‑Powered Interview Coaching
-                  </span>
-                </h1>
+                  <h1 className="mt-8 max-w-4xl mx-auto text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem] font-semibold">
+                    Land Your Dream Role with{" "}
+                    <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                      AI‑Powered Interview Coaching
+                    </span>
+                  </h1>
                   <p className="mx-auto mt-8 max-w-2xl text-balance text-lg">
-                    Upload your resume and job description. Get an instant compatibility score, personalized feedback, and interview practice, so you show up confident and prepared.
+                    Upload your resume and job description. Get an instant
+                    compatibility score, personalized feedback, and interview
+                    practice, so you show up confident and prepared.
                   </p>
                 </AnimatedGroup>
 
@@ -193,10 +195,9 @@ export function HeroSection() {
 }
 
 const menuItems = [
-  { name: "Features", href: "#link" },
-  { name: "Solution", href: "#link" },
-  { name: "Pricing", href: "#link" },
-  { name: "About", href: "#link" },
+  { name: "Features", href: ".Features" },
+  { name: "Steps", href: ".Steps" },
+  { name: "Contact Us", href: ".ContactUs" },
 ];
 
 const HeroHeader = () => {
@@ -210,6 +211,12 @@ const HeroHeader = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  const scrollToSection = (href: string) => {
+    const el = document.querySelector(href);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <header>
       <nav
@@ -231,7 +238,15 @@ const HeroHeader = () => {
                 className="flex items-center space-x-2"
               >
                 {/* <Logo /> */}
-                <Image src="/assets/online-recruitment.png" height="30" width="30" alt="logo"/><span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">HireReady-AI</span>
+                <Image
+                  src="/assets/online-recruitment.png"
+                  height="30"
+                  width="30"
+                  alt="logo"
+                />
+                <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
+                  HireReady-AI
+                </span>
               </Link>
 
               <button
@@ -248,12 +263,20 @@ const HeroHeader = () => {
               <ul className="flex gap-8 text-sm">
                 {menuItems.map((item, index) => (
                   <li key={index}>
-                    <Link
+                    {/* <Link
                       href={item.href}
                       className="text-muted-foreground hover:text-accent-foreground block duration-150"
                     >
                       <span>{item.name}</span>
-                    </Link>
+                    </Link> */}
+                    <span
+                      className="text-muted-foreground hover:text-accent-foreground block duration-150 cursor-pointer"
+                      onClick={() => {
+                        scrollToSection(item.href);
+                      }}
+                    >
+                      <span>{item.name}</span>
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -264,12 +287,14 @@ const HeroHeader = () => {
                 <ul className="space-y-6 text-base">
                   {menuItems.map((item, index) => (
                     <li key={index}>
-                      <Link
-                        href={item.href}
-                        className="text-muted-foreground hover:text-accent-foreground block duration-150"
+                      <span
+                        className="text-muted-foreground hover:text-accent-foreground block duration-150 cursor-pointer"
+                        onClick={() => {
+                          scrollToSection(item.href);
+                        }}
                       >
                         <span>{item.name}</span>
-                      </Link>
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -311,4 +336,3 @@ const HeroHeader = () => {
     </header>
   );
 };
-
