@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/ui/footer";
 import { Github, Hexagon, Twitter } from "lucide-react";
+import AppProvider from "@/providers/app-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -22,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
+        <AppProvider>
         {children}
+        </AppProvider>
         <Footer
           logo={<Hexagon className="h-10 w-10" />}
           brandName="Hire Ready"
