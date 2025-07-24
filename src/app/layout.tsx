@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Footer } from "@/components/ui/footer";
-import { Github, Hexagon, Twitter } from "lucide-react";
 import AppProvider from "@/providers/app-provider";
 
 const inter = Inter({
@@ -16,7 +14,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -24,35 +21,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased`}>
-        <AppProvider>
-        {children}
-        </AppProvider>
-        <Footer
-          logo={<Hexagon className="h-10 w-10" />}
-          brandName="Hire Ready"
-          socialLinks={[
-        {
-          icon: <Twitter className="h-5 w-5" />,
-          href: "https://twitter.com",
-          label: "Twitter",
-        },
-        {
-          icon: <Github className="h-5 w-5" />,
-          href: "https://github.com",
-          label: "GitHub",
-        },
-          ]}
-          contactEmails={[
-        { email: "tipanaboinaajay@gmail.com" },
-        { email: "pyatlavishnuvardhan@gmail.com"},
-          ]}
-          copyright={{
-        text: "© 2025 HireReady-AI",
-        license: "All rights reserved",
-          }}
-        />
+        <AppProvider>{children}</AppProvider>
       </body>
-
     </html>
   );
 }
