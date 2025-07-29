@@ -123,7 +123,7 @@ export default function UserSignupPage() {
 
         <div className="bg-black text-white p-8 md:p-12 md:w-1/2 relative rounded-bl-3xl  overflow-hidden">
           <h1 className="text-2xl md:text-3xl font-medium leading-tight z-10 tracking-tight relative">
-            Design and dev partner for startups and founders.
+           Built for Candidates Who Want to Stand Out.
           </h1>
         </div>
 

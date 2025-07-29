@@ -11,6 +11,7 @@ const nextConfig = {
   images: {
     domains: ['static.vecteezy.com'],
   },
+  
   // ...other config
 }
 
