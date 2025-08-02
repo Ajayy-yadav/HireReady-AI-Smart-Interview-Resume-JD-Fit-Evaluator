@@ -4,6 +4,7 @@ import "./globals.css";
 import AppProvider from "@/providers/app-provider";
 
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${inter.variable} antialiased`}>
           <AppProvider>{children}</AppProvider>
+          <Toaster position="bottom-right" />
         </body>
       </html>
     </ClerkProvider>
