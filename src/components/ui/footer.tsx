@@ -27,7 +27,7 @@ export function Footer({
   copyright,
 }: FooterProps) {
   return (
-    <footer className="pb-6 pt-16 lg:pb-8 lg:pt-24 ContactUs ">
+    <footer className="pb-6 pt-16 lg:pb-8 lg:pt-16 ContactUs rounded-t-[28px] bg-gradient-to-br from-orange-400 via-pink-400 to-cyan-400">
       <div className="px-4 lg:px-8">
         <div className="md:flex md:items-start md:justify-between">
           <Link

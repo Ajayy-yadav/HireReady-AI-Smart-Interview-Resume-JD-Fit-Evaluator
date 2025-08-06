@@ -12,8 +12,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import Image from "next/image"
+} from "@/components/ui/sidebar";
+import Image from "next/image";
+import { useClerk } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 // Menu items.
 const items = [
@@ -35,37 +37,51 @@ const items = [
   {
     title: "Activity Log",
     url: "#",
-    icon: RiFileHistoryLine ,
+    icon: RiFileHistoryLine,
   },
-  
-]
+  {
+    title: "Logout",
+    url: "#",
+    icon: RiFileHistoryLine, // Replace with an appropriate logout icon
+  },
+];
 
 export function AppSidebar() {
+  const { signOut } = useClerk();
+  const router = useRouter();
   return (
-    <Sidebar
-      variant="floating"
-      collapsible="icon"
-    >
+    <Sidebar variant="floating" collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="flex gap-2 justify-center items-center">
             <Image
-                  src="/assets/online-recruitment.png"
-                  height="25"
-                  width="25"
-                  alt="logo"
+              src="/assets/online-recruitment.png"
+              height="25"
+              width="25"
+              alt="logo"
             />
             <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold text-lg">
-                  HireReady-AI
-                </span>
+              HireReady-AI
+            </span>
           </SidebarGroupLabel>
           <SidebarGroupContent className="pt-5">
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild className="h-10">
-                    <a href={item.url}>
-                      <item.icon size={20}/>
+                    <a
+                      href={item.url}
+                      onClick={
+                        item.title === "Logout"
+                          ? (e) => {
+                              e.preventDefault();
+                              signOut();
+                              router.push("/");
+                            }
+                          : undefined
+                      }
+                    >
+                      <item.icon size={20} />
                       <span className="text-base">{item.title}</span>
                     </a>
                   </SidebarMenuButton>
@@ -95,8 +111,7 @@ export function AppSidebar() {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }
