@@ -26,6 +26,7 @@ import { userDataAtom } from "@/store/atom";
 import { User } from "@/types/userTs";
 import { useQuery } from "@tanstack/react-query";
 import type { QueryObserverResult } from "@tanstack/react-query";
+import Sidebarskele from "@/skeleton-loaders/sidebar-skele";
 
 // Menu items.
 const items = [
@@ -77,23 +78,24 @@ export function AppSidebar() {
     queryFn: fetchUserData,
     enabled: !!userID, // Only run when userID is available
     select: (data: User) => {
-      setUserData(data);
+      
       return data;
     },
   });
 
   // Handle error with useEffect
   useEffect(() => {
+    if(data){
+      setUserData(data);
+    }
     if (isError) {
       toast.error("Failed to fetch user data. Please try again later.");
     }
-  }, [isError]);
+  }, [isError,data]);
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        Loading...
-      </div>
+      <Sidebarskele/>
     );
   }
   return (
@@ -107,9 +109,7 @@ export function AppSidebar() {
               width="300"
               alt="logo"
             />
-            {/* <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold text-lg">
-              HireReady-AI
-            </span> */}
+            
           </SidebarGroupLabel>
           <SidebarGroupContent className="pt-5">
             <SidebarMenu>
@@ -141,12 +141,12 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="h-10">
+            <SidebarMenuButton asChild className="h-10" >
               <div>
                 <div className="flex gap-3 w-full items-center">
                   <Image
                     className="shrink-0"
-                    src="/assets/User.png"
+                    src={userData?.imageUrl ?userData.imageUrl: "/assets/User.png"}
                     height="40"
                     width="40"
                     alt="User"
@@ -164,7 +164,9 @@ export function AppSidebar() {
                     )}
                   </span>
                 </div>
-                <Editpopup />
+                <div className="invisible group-hover:visible transition-all">
+                  <Editpopup />
+                </div>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
