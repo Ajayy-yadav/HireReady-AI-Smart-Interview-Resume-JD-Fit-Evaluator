@@ -230,7 +230,7 @@ const HeroHeader = () => {
               "bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5"
           )}
         >
-          <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
+          <div className="relative flex flex-wrap items-center justify-between gap-6  lg:gap-0 ">
             <div className="flex w-full justify-between lg:w-auto">
               <Link
                 href="/"
@@ -239,14 +239,14 @@ const HeroHeader = () => {
               >
                 {/* <Logo /> */}
                 <Image
-                  src="/assets/online-recruitment.png"
-                  height="30"
-                  width="30"
+                  src="/assets/logo-transparent-svg.svg"
+                  height="250"
+                  width="250"
                   alt="logo"
                 />
-                <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
+                {/* <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
                   HireReady-AI
-                </span>
+                </span> */}
               </Link>
 
               <button
