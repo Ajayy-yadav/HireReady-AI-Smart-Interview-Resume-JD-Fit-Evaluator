@@ -6,6 +6,7 @@ import AppProvider from "@/providers/app-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 import JotaiProvider from "@/providers/jotai-provider";
+import ReactQueryProvider from "@/providers/react-query-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,12 +27,11 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className={`${inter.variable} ${inter.className}`}>
         <body>
-          
-          <AppProvider>
-            <JotaiProvider>
-            {children}
-            </JotaiProvider>
+          <ReactQueryProvider>
+            <AppProvider>
+              <JotaiProvider>{children}</JotaiProvider>
             </AppProvider>
+          </ReactQueryProvider>
           <Toaster position="bottom-right" />
         </body>
       </html>

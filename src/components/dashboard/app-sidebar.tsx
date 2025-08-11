@@ -23,9 +23,9 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useAtom } from "jotai";
 import { userDataAtom } from "@/store/atom";
-import { is } from "zod/v4/locales";
 import { User } from "@/types/userTs";
 import { useQuery } from "@tanstack/react-query";
+import type { QueryObserverResult } from "@tanstack/react-query";
 
 // Menu items.
 const items = [
@@ -57,12 +57,12 @@ const items = [
 ];
 
 export function AppSidebar() {
-  const {user}=useUser();
-  const userID=user?.id;
+  const { user } = useUser();
+  const userID = user?.id;
   console.log("User ID:", userID);
   const { signOut } = useClerk();
   const router = useRouter();
-  const [userData,setUserData] = useAtom(userDataAtom);
+  const [userData, setUserData] = useAtom(userDataAtom);
   console.log("User Data:", userData);
   // const [isLoading, setIsLoading] = useState(false);
   const fetchUserData = async (): Promise<User> => {
@@ -76,21 +76,25 @@ export function AppSidebar() {
     queryKey: ["userData", userID],
     queryFn: fetchUserData,
     enabled: !!userID, // Only run when userID is available
-    // onSuccess: (data: User) => setUserData(data),
-    // onError: () =>
-    //   toast.error("Failed to fetch user data. Please try again later."),
-  });
-  useEffect(() => {
-    if (data) {
+    select: (data: User) => {
       setUserData(data);
-    }
+      return data;
+    },
+  });
+
+  // Handle error with useEffect
+  useEffect(() => {
     if (isError) {
       toast.error("Failed to fetch user data. Please try again later.");
     }
-  }, [data]);
-  if(isLoading) {     
-    
-    return <div className="flex items-center justify-center h-screen">Loading...</div>;
+  }, [isError]);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        Loading...
+      </div>
+    );
   }
   return (
     <Sidebar variant="floating" collapsible="icon">
@@ -148,11 +152,16 @@ export function AppSidebar() {
                     alt="User"
                   />
                   <span className="flex flex-col flex-1 min-w-0 truncate sidebar-expanded:inline sidebar-collapsed:hidden">
-                    {userData && userData.username &&(
-                      <p className="font-semibold text-base truncate">{userData.username}</p>
+                    {userData && userData.username && (
+                      <p className="font-semibold text-base truncate">
+                        {userData.username}
+                      </p>
                     )}
-                    { userData && userData.currentRole && (<p className="font-medium text-sm truncate">{userData.currentRole}</p>)}
-                    
+                    {userData && userData.currentRole && (
+                      <p className="font-medium text-sm truncate">
+                        {userData.currentRole}
+                      </p>
+                    )}
                   </span>
                 </div>
                 <Editpopup />

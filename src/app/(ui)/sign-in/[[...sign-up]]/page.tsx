@@ -70,7 +70,7 @@ export default function LoginPage() {
       });
 
       if (result.status === "complete") {
-        router.push("/doctor");
+        router.push("/dashboard");
         toast.success("Login successful");
       } else {
         toast.error("Verification failed. Please try again.");
