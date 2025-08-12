@@ -239,7 +239,7 @@ const HeroHeader = () => {
               >
                 {/* <Logo /> */}
                 <Image
-                  src="/assets/logo-transparent-svg.svg"
+                  src="/assets/logo-transparent1-svg.svg"
                   height="250"
                   width="250"
                   alt="logo"

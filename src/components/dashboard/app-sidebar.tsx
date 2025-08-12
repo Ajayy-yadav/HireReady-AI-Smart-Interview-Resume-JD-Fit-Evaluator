@@ -1,7 +1,7 @@
 import { RxDashboard } from "react-icons/rx";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { BsPersonVideo2 } from "react-icons/bs";
-import { RiFileHistoryLine } from "react-icons/ri";
+import { FaHistory } from "react-icons/fa";
 import { Pencil } from "lucide-react";
 import {
   Sidebar,
@@ -27,6 +27,7 @@ import { User } from "@/types/userTs";
 import { useQuery } from "@tanstack/react-query";
 import type { QueryObserverResult } from "@tanstack/react-query";
 import Sidebarskele from "@/skeleton-loaders/sidebar-skele";
+import { HiOutlineLogout } from "react-icons/hi";
 
 // Menu items.
 const items = [
@@ -48,12 +49,12 @@ const items = [
   {
     title: "Activity Log",
     url: "#",
-    icon: RiFileHistoryLine,
+    icon: FaHistory,
   },
   {
     title: "Logout",
     url: "#",
-    icon: RiFileHistoryLine, // Replace with an appropriate logout icon
+    icon: HiOutlineLogout, // Replace with an appropriate logout icon
   },
 ];
 
@@ -105,8 +106,8 @@ export function AppSidebar() {
           <SidebarGroupLabel className="flex gap-2 justify-center items-center">
             <Image
               src="/assets/logo-transparent-svg.svg"
-              height="300"
-              width="300"
+              height="250"
+              width="250"
               alt="logo"
             />
             
@@ -128,7 +129,7 @@ export function AppSidebar() {
                           : undefined
                       }
                     >
-                      <item.icon size={20} />
+                      <item.icon size={25} />
                       <span className="text-base">{item.title}</span>
                     </a>
                   </SidebarMenuButton>

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { TextHoverEffect } from "./text-hover-effect";
+import Image from "next/image";
 
 interface FooterProps {
   logo: React.ReactNode;
@@ -20,8 +21,7 @@ interface FooterProps {
 }
 
 export function Footer({
-  logo,
-  brandName,
+ 
   socialLinks,
   contactEmails,
   copyright,
@@ -29,14 +29,19 @@ export function Footer({
   return (
     <footer className="pb-6 pt-16 lg:pb-8 lg:pt-16 ContactUs rounded-t-[28px] bg-gradient-to-br from-orange-400 via-pink-400 to-cyan-400">
       <div className="px-4 lg:px-8">
-        <div className="md:flex md:items-start md:justify-between">
+        <div className="flex items-center justify-between">
           <Link
-            href="/"
+            href=""
             className="flex items-center gap-x-2"
-            aria-label={brandName}
+            
           >
-            {logo}
-            <span className="font-bold text-xl">{brandName}</span>
+            <Image
+                              src="/assets/logo-transparent-svg.svg"
+                              height="250"
+                              width="250"
+                              alt="logo"
+                            />
+            {/* <span className="font-bold text-xl">{brandName}</span> */}
           </Link>
           <ul className="flex list-none mt-6 md:mt-0 space-x-3">
             {socialLinks.map((link, i) => (
