@@ -22,6 +22,7 @@ import { FaUserEdit } from "react-icons/fa";
 import { RiLoader2Fill } from "react-icons/ri";
 import { MdEdit } from "react-icons/md";
 import { useBase64ImageUpload } from "@/hooks/file-upload";
+import UserProfile from "./user-profile";
 
 export function Editpopup() {
   const { user } = useUser();
@@ -33,56 +34,55 @@ export function Editpopup() {
   const [role, setRole] = useState(userData?.currentRole || "");
   const [isLoading, setIsLoading] = useState(false);
 
-  const [profileImage, setProfileImage] = useState(userData?.imageUrl || "");
-  const [newImage, setNewImage] = useState<string | null>(null);
+  const [profileImage, setProfileImage] = useState(userData?.imageKey || "");
+const [newImage, setNewImage] = useState<string | null>(null);
+const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const imageURL = URL.createObjectURL(file);
-      setNewImage(imageURL);
-    }
-  };
+const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (file) {
+    setSelectedFile(file);
+    setNewImage(URL.createObjectURL(file));
+  }
+};
 
-  const handleUserUpdates = async () => {
-    setIsLoading(true);
-    try {
-      let imageUrl = profileImage;
-      // If a new image is selected, upload it first
-      if (newImage && newImage !== profileImage) {
-        const fileInput = document.getElementById("imageUpload") as HTMLInputElement;
-        const file = fileInput?.files?.[0];
-        if (file) {
-          const uploadResult = await uploadImage(file, userID as string);
-          imageUrl = uploadResult.url || uploadResult.imageUrl || imageUrl;
-        }
-      }
-      const newUserData = {
-        username: username,
-        currentRole: role,
-        imageUrl: imageUrl,
-      };
-      if (newUserData.username && newUserData.currentRole) {
-        const response = await axios.patch<User>(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/update/${userID}`,
-          newUserData
-        );
-        if (response.status === 200) {
-          setUserData(response.data);
-          toast.success("Profile updated successfully!");
-        }
-      }
-    } catch (error) {
-      toast.error("Failed to update profile. Please try again.");
-    } finally {
-      setIsLoading(false);
+const handleUserUpdates = async () => {
+  setIsLoading(true);
+  try {
+    let imageKey = profileImage;
+
+    if (selectedFile) {
+      const uploadResult = await uploadImage(selectedFile, userID as string);
+      imageKey = uploadResult.key || uploadResult.imageKey || imageKey;
     }
-  };
+
+    const newUserData = {
+      username,
+      currentRole: role,
+      imageKey, // ✅ consistent naming
+    };
+
+    const response = await axios.patch<User>(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/update/${userID}`,
+      newUserData
+    );
+
+    if (response.status === 200) {
+      setUserData(response.data);
+      toast.success("Profile updated successfully!");
+    }
+  } catch (error: any) {
+    const message = error.response?.data?.message || "Failed to update profile. Please try again.";
+    toast.error(message);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   useEffect(() => {
     setUsername(userData?.username || "");
     setRole(userData?.currentRole || "");
-    setProfileImage(userData?.imageUrl || "");
+    setProfileImage(userData?.imageKey|| "");
   }, [userData]);
 
   if (!userData) {
@@ -114,11 +114,13 @@ export function Editpopup() {
               {/* Profile Image with edit icon */}
               <div className="flex justify-center">
                 <div className="relative">
-                  <img
-                    src={newImage || profileImage || "/default-avatar.png"}
-                    alt="Profile"
-                    className="w-24 h-24 rounded-full object-cover border"
-                  />
+                  {userData && userData.imageKey &&(
+                      <UserProfile
+                        id={userData.id}
+                        image={userData.imageKey}
+                        avatarStyles="rounded-full h-20 w-20 object-cover"
+                      />
+                  )}
                   <label
                     htmlFor="imageUpload"
                     className="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow cursor-pointer"

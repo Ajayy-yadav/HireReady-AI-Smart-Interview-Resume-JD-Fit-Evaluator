@@ -1,53 +1,38 @@
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
-// Utility to convert file to base64
-const fileToBase64 = (file: File) => {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-  const result = reader.result as string;
-  const base64 = result.split(',')[1]; // Get only the base64 part
-  resolve(base64);
-    };
-    reader.onerror = (error) => reject(error);
-  });
-};
-// Custom Hook
 export function useBase64ImageUpload() {
   const [isUploading, setIsUploading] = useState(false);
-  const [error, setError] = useState(null);
-  const [uploadedData, setUploadedData] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [uploadedData, setUploadedData] = useState<any>(null);
 
-  const uploadImage = async (file:File, userId:string) => {
+  const uploadImage = async (file: File, userId: string) => {
     setIsUploading(true);
     setError(null);
     setUploadedData(null);
 
     try {
-      const base64Data = await fileToBase64(file);
+      const formData = new FormData();
+      formData.append("file", file);
+  
 
-      const requestData = {
-        fileBase64: base64Data,
-        filename: file.name,
-        mimetype: file.type,
-        userId: userId,
-      };
-      console.log("Request Data:", requestData);
-        const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/resume/upload-image-base64`,
-        requestData, // This is the payload
-        { headers: { "Content-Type": "application/json" } }
-);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/aws/upload-image`,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
 
-      if (!(response.status === 200)) {
-        throw new Error(`Upload failed with status: ${response.status}`);
+      if (response.status === 201) {
+        toast.success("upload successful");
       }
+
       setUploadedData(response.data);
       return response.data;
-    } catch (err:any) {
-      setError(err?.message || "Something went wrong");
+    } catch (err: any) {
+      const message =
+        err.response?.data?.message || err.message || "Something went wrong";
+      setError(message);
       throw err;
     } finally {
       setIsUploading(false);

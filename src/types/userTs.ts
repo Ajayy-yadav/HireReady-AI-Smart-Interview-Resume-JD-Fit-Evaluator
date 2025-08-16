@@ -1,7 +1,7 @@
 export interface User {
   id: string;
   email: string;
-  imageUrl: string | null;
+  imageKey: string | null;
   username: string;
   currentRole: string;
   resumeUrl: string | null;

@@ -2,7 +2,6 @@ import { RxDashboard } from "react-icons/rx";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { BsPersonVideo2 } from "react-icons/bs";
 import { FaHistory } from "react-icons/fa";
-import { Pencil } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -28,6 +27,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { QueryObserverResult } from "@tanstack/react-query";
 import Sidebarskele from "@/skeleton-loaders/sidebar-skele";
 import { HiOutlineLogout } from "react-icons/hi";
+import UserProfile from "./user/user-profile";
 
 // Menu items.
 const items = [
@@ -145,13 +145,14 @@ export function AppSidebar() {
             <SidebarMenuButton asChild className="h-10" >
               <div>
                 <div className="flex gap-3 w-full items-center">
-                  <Image
-                    className="shrink-0"
-                    src={userData?.imageUrl ?userData.imageUrl: "/assets/User.png"}
-                    height="40"
-                    width="40"
-                    alt="User"
-                  />
+                  
+                  {userData && userData.imageKey &&(
+                    <UserProfile
+                      id={userData.id}
+                      image={userData.imageKey}
+                      avatarStyles="rounded-full h-10 w-10 object-cover"
+                    />
+                )}
                   <span className="flex flex-col flex-1 min-w-0 truncate sidebar-expanded:inline sidebar-collapsed:hidden">
                     {userData && userData.username && (
                       <p className="font-semibold text-base truncate">
