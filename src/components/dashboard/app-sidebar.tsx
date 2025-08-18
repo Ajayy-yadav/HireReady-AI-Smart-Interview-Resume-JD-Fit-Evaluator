@@ -13,21 +13,23 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+
 import Image from "next/image";
 import { useClerk, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { Editpopup } from "./user/editpopup";
+
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useAtom } from "jotai";
 import { userDataAtom } from "@/store/atom";
 import { User } from "@/types/userTs";
 import { useQuery } from "@tanstack/react-query";
-import type { QueryObserverResult } from "@tanstack/react-query";
+
 import Sidebarskele from "@/skeleton-loaders/sidebar-skele";
-import { HiOutlineLogout } from "react-icons/hi";
+
 import UserProfile from "./user/user-profile";
+import { Menu } from "./menu";
 
 // Menu items.
 const items = [
@@ -51,11 +53,7 @@ const items = [
     url: "#",
     icon: FaHistory,
   },
-  {
-    title: "Logout",
-    url: "#",
-    icon: HiOutlineLogout, // Replace with an appropriate logout icon
-  },
+  
 ];
 
 export function AppSidebar() {
@@ -167,7 +165,7 @@ export function AppSidebar() {
                   </span>
                 </div>
                 <div className="invisible group-hover:visible transition-all">
-                  <Editpopup />
+                  <Menu />
                 </div>
               </div>
             </SidebarMenuButton>

@@ -18,11 +18,12 @@ import axios from "axios";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaUserEdit } from "react-icons/fa";
+import { BiEditAlt } from "react-icons/bi";
 import { RiLoader2Fill } from "react-icons/ri";
 import { MdEdit } from "react-icons/md";
 import { useBase64ImageUpload } from "@/hooks/file-upload";
 import UserProfile from "./user-profile";
+import { FaUserEdit } from "react-icons/fa";
 
 export function Editpopup() {
   const { user } = useUser();
@@ -93,9 +94,12 @@ const handleUserUpdates = async () => {
     <Dialog>
       <form>
         <DialogTrigger asChild>
-          <Button variant="ghost">
-            <FaUserEdit />
-          </Button>
+          <div className="flex items-center gap-4 justify-center cursor-pointer">
+            
+              <FaUserEdit className="h-4 w-4"/>
+  
+            <p className="font-medium">Edit Profile</p>
+          </div>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
