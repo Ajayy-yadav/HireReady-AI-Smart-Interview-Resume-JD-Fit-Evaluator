@@ -70,8 +70,11 @@ export default function LoginPage() {
       });
 
       if (result.status === "complete") {
-        router.push("/dashboard");
         toast.success("Login successful");
+        // Wait a bit for the session to be established, then redirect
+        setTimeout(() => {
+          window.location.href = "/dashboard";
+        }, 1000);
       } else {
         toast.error("Verification failed. Please try again.");
       }
@@ -201,7 +204,7 @@ export default function LoginPage() {
           <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
             Don&apos;t have an account?{" "}
             <button
-              onClick={() => router.push("/signup")}
+              onClick={() => router.push("/sign-up")}
               className="text-blue-600 font-medium hover:underline"
             >
               Sign up

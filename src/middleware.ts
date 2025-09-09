@@ -11,15 +11,27 @@ export default clerkMiddleware(async (auth, req) => {
     const isLanding = pathname === '/' || pathname === '/landing';
     const isSignIn = pathname.startsWith('/sign-in');
     const isSignUp = pathname.startsWith('/sign-up');
+    const isDashboard = pathname.startsWith('/dashboard');
 
+
+
+    // If user is authenticated and trying to access auth pages, redirect to dashboard
     if (userId && (isLanding || isSignIn || isSignUp)) {
+      console.log('Redirecting authenticated user to dashboard');
       return NextResponse.redirect(new URL('/dashboard', req.url));
     }
-    if (!userId && pathname.startsWith('/dashboard')) {
-      return NextResponse.redirect(new URL('/sign-in', req.url));
+    
+    // Only redirect to sign-in if user is definitely not authenticated
+    // Allow dashboard access to proceed and let the component handle the redirect
+    if (!userId && isDashboard) {
+      console.log('No userId found, allowing dashboard access to handle redirect');
+      // Don't redirect here, let the dashboard component handle it
     }
+    
     return NextResponse.next();
   } catch (error) {
+    console.error('Middleware error:', error);
+    // If there's an error, allow the request to proceed but log it
     return NextResponse.next();
   }
 });

@@ -102,7 +102,10 @@ export default function UserSignupPage() {
         );
         if (res.status === 201) {
           toast.success("Account created successfully!");
-          router.push("/dashboard"); // Redirect after successful signup
+          // Wait a bit for the session to be established, then redirect
+          setTimeout(() => {
+            window.location.href = "/dashboard";
+          }, 1000);
         }
       }
     } catch (err: any) {
@@ -238,7 +241,7 @@ export default function UserSignupPage() {
             Already have an account?{" "}
             <button
               type="button"
-              onClick={() => router.push("/login")}
+              onClick={() => router.push("/sign-in")}
               className="text-primary font-medium hover:underline"
             >
               Sign in
