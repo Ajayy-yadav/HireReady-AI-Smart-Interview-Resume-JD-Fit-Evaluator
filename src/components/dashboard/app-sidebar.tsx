@@ -1,7 +1,6 @@
-import { RxDashboard } from "react-icons/rx";
-import { AiOutlineFileSearch } from "react-icons/ai";
-import { BsPersonVideo2 } from "react-icons/bs";
-import { FaHistory } from "react-icons/fa";
+"use client"
+
+import { LayoutDashboard, FileSearch, Video, Clock } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -12,159 +11,181 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from "@/components/ui/sidebar"
+import Image from "next/image"
+import { useClerk, useUser } from "@clerk/nextjs"
+import { useRouter, usePathname } from "next/navigation"
 
-import Image from "next/image";
-import { useClerk, useUser } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
+import axios from "axios"
+import { useEffect } from "react"
+import toast from "react-hot-toast"
+import { useAtom } from "jotai"
+import { userDataAtom } from "@/store/atom"
+import type { User } from "@/types/userTs"
+import { useQuery } from "@tanstack/react-query"
 
-import axios from "axios";
-import { useEffect } from "react";
-import toast from "react-hot-toast";
-import { useAtom } from "jotai";
-import { userDataAtom } from "@/store/atom";
-import { User } from "@/types/userTs";
-import { useQuery } from "@tanstack/react-query";
+import Sidebarskele from "@/skeleton-loaders/sidebar-skele"
 
-import Sidebarskele from "@/skeleton-loaders/sidebar-skele";
+import UserProfile from "./user/user-profile"
+import { Menu } from "./menu"
 
-import UserProfile from "./user/user-profile";
-import { Menu } from "./menu";
-
-// Menu items.
 const items = [
   {
     title: "Dashboard",
-    url: "#",
-    icon: RxDashboard,
+    url: "/dashboard",
+    icon: LayoutDashboard,
+    description: "Overview & Analytics Hub",
   },
   {
-    title: "JD Analyzer",
-    url: "#",
-    icon: AiOutlineFileSearch,
+    title: "Resume Analyzer",
+    url: "/resume-analyzer",
+    icon: FileSearch,
+    description: "AI-Powered Job Matching",
   },
   {
-    title: "Mock Interview",
-    url: "#",
-    icon: BsPersonVideo2,
+    title: "Interview Practice",
+    url: "/mock-interview",
+    icon: Video,
+    description: "Mock Interview Sessions",
   },
   {
-    title: "Activity Log",
-    url: "#",
-    icon: FaHistory,
+    title: "Activity History",
+    url: "/activity-log",
+    icon: Clock,
+    description: "Recent Actions & Progress",
   },
-  
-];
+]
 
 export function AppSidebar() {
-  const { user } = useUser();
-  const userID = user?.id;
-  console.log("User ID:", userID);
-  const { signOut } = useClerk();
-  const router = useRouter();
-  const [userData, setUserData] = useAtom(userDataAtom);
-  console.log("User Data:", userData);
-  // const [isLoading, setIsLoading] = useState(false);
+  const { user } = useUser()
+  const userID = user?.id
+  console.log("User ID:", userID)
+  const { signOut } = useClerk()
+  const router = useRouter()
+  const pathname = usePathname()
+  const [userData, setUserData] = useAtom(userDataAtom)
+  console.log("User Data:", userData)
+
   const fetchUserData = async (): Promise<User> => {
-    const { data } = await axios.get<User>(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/get/${userID}`
-    );
-    return data;
-  };
+    const { data } = await axios.get<User>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/get/${userID}`)
+    return data
+  }
 
   const { data, isLoading, isError } = useQuery<User>({
     queryKey: ["userData", userID],
     queryFn: fetchUserData,
-    enabled: !!userID, // Only run when userID is available
+    enabled: !!userID,
     select: (data: User) => {
-      
-      return data;
+      return data
     },
-  });
+  })
 
-  // Handle error with useEffect
   useEffect(() => {
-    if(data){
-      setUserData(data);
+    if (data) {
+      setUserData(data)
     }
     if (isError) {
-      toast.error("Failed to fetch user data. Please try again later.");
+      toast.error("Failed to fetch user data. Please try again later.")
     }
-  }, [isError,data]);
+  }, [isError, data])
+
+  console.log("UserImage:", userData?.imageKey ? userData?.imageKey : "No Image")
 
   if (isLoading) {
-    return (
-      <Sidebarskele/>
-    );
+    return <Sidebarskele />
   }
+
   return (
     <Sidebar variant="floating" collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="flex gap-2 justify-center items-center">
-            <Image
-              src="/assets/logo-transparent-svg.svg"
-              height="250"
-              width="250"
-              alt="logo"
-            />
-            
+          <SidebarGroupLabel className="flex gap-2 justify-center items-center py-4 px-2">
+            <div className="relative">
+              <Image
+                src="/assets/logo-transparent-svg.svg"
+                height="180"
+                width="180"
+                alt="logo"
+                className="transition-all duration-200 hover:scale-105"
+              />
+            </div>
           </SidebarGroupLabel>
-          <SidebarGroupContent className="pt-5">
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild className="h-10">
-                    <a
-                      href={item.url}
-                      onClick={
-                        item.title === "Logout"
-                          ? (e) => {
-                              e.preventDefault();
-                              signOut();
-                              router.push("/");
-                            }
-                          : undefined
-                      }
+
+          <SidebarGroupContent className="pt-6 px-2">
+            <SidebarMenu className="space-y-2">
+              {items.map((item) => {
+                const isActive = pathname === item.url
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      data-active={isActive}
+                      className="h-12 rounded-xl transition-all duration-200 hover:bg-accent/80 hover:shadow-sm group data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
                     >
-                      <item.icon size={25} />
-                      <span className="text-base">{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+                      <a
+                        href={item.url}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          router.push(item.url)
+                        }}
+                        className="flex items-center gap-4 px-3"
+                      >
+                        <div className="flex items-center justify-center w-6 h-6 transition-transform duration-200 group-hover:scale-110">
+                          <item.icon size={20} className="text-current" />
+                        </div>
+
+                        <div className="flex flex-col flex-1 min-w-0">
+                          <span className="text-sm font-medium text-current truncate">{item.title}</span>
+                          <span className="text-xs text-muted-foreground truncate sidebar-expanded:inline sidebar-collapsed:hidden">
+                            {item.description}
+                          </span>
+                        </div>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
+
+      <SidebarFooter className="p-2">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="h-10" >
-              <div>
-                <div className="flex gap-3 w-full items-center">
-                  
-                  {userData && userData.imageKey &&(
-                    <UserProfile
-                      id={userData.id}
-                      image={userData.imageKey}
-                      avatarStyles="rounded-full h-10 w-10 object-cover"
-                    />
-                )}
-                  <span className="flex flex-col flex-1 min-w-0 truncate sidebar-expanded:inline sidebar-collapsed:hidden">
+            <SidebarMenuButton asChild className="h-auto p-3 rounded-xl hover:bg-accent/50 transition-all duration-200">
+              <div className="w-full">
+                <div className="flex gap-3 w-full items-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0">
+                  <div className="relative flex-shrink-0">
+                    {userData && userData.imageKey ? (
+                      <UserProfile
+                        id={userData.id}
+                        image={userData.imageKey.length > 0 ? userData.imageKey : "/assets/User.png"}
+                        avatarStyles="rounded-full h-10 w-10 object-cover ring-2 ring-background shadow-sm group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:ring-1"
+                      />
+                    ) : (
+                      <Image
+                        src="/assets/User.png"
+                        height="40"
+                        width="40"
+                        alt="userimage"
+                        className="rounded-full h-10 w-10 object-cover ring-2 ring-background group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:ring-1"
+                      />
+                    )}
+                    <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full ring-2 ring-background group-data-[collapsible=icon]:w-2 group-data-[collapsible=icon]:h-2 group-data-[collapsible=icon]:ring-1"></div>
+                  </div>
+
+                  <div className="flex flex-col flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
                     {userData && userData.username && (
-                      <p className="font-semibold text-base truncate">
-                        {userData.username}
-                      </p>
+                      <p className="font-semibold text-sm text-foreground truncate">{userData.username}</p>
                     )}
                     {userData && userData.currentRole && (
-                      <p className="font-medium text-sm truncate">
-                        {userData.currentRole}
-                      </p>
+                      <p className="font-normal text-xs text-muted-foreground truncate">{userData.currentRole}</p>
                     )}
-                  </span>
+                  </div>
                 </div>
-                <div className="invisible group-hover:visible transition-all">
+
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-2 group-data-[collapsible=icon]:hidden">
                   <Menu />
                 </div>
               </div>
@@ -173,5 +194,5 @@ export function AppSidebar() {
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
-  );
+  )
 }

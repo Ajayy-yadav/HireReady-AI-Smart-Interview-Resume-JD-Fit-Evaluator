@@ -161,7 +161,7 @@ export default function LoginPage() {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setOtp(e.target.value)
                   }
-                  className="focus-visible:ring-2 focus-visible:ring-primary"
+                  className="focus-visible:ring-2 focus-visible:ring-primary mb-4"
                   disabled={isLoading}
                 />
               </div>

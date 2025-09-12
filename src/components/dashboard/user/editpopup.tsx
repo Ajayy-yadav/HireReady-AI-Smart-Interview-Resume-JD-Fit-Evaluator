@@ -24,6 +24,7 @@ import { MdEdit } from "react-icons/md";
 import { useBase64ImageUpload } from "@/hooks/file-upload";
 import UserProfile from "./user-profile";
 import { FaUserEdit } from "react-icons/fa";
+import Image from "next/image";
 
 export function Editpopup() {
   const { user } = useUser();
@@ -118,13 +119,22 @@ const handleUserUpdates = async () => {
               {/* Profile Image with edit icon */}
               <div className="flex justify-center">
                 <div className="relative">
-                  {userData && userData.imageKey &&(
+                  {userData && userData.imageKey?(
+
                       <UserProfile
                         id={userData.id}
-                        image={userData.imageKey}
+                        image={profileImage}
                         avatarStyles="rounded-full h-20 w-20 object-cover"
                       />
-                  )}
+                  ):(
+                      <Image
+                      src={newImage||"/assets/User.png"}
+                      height="100"
+                      width="100"
+                      alt="userimage"
+                      className="rounded-full h-10 w-10 object-cover"
+                      />
+                    )}
                   <label
                     htmlFor="imageUpload"
                     className="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow cursor-pointer"
