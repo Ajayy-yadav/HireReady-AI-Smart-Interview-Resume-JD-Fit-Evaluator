@@ -1,11 +1,23 @@
+"use client";
 import { FeatureSteps } from "@/components/feature-section";
 import { FeaturesSectionWithHoverEffects } from "@/components/feature-section-with-hover-effects";
 import { HeroSection } from "@/components/hero-section-1";
 import { Footer } from "@/components/ui/footer";
 import { Github, Hexagon, Twitter } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function Main() {
+  const { isSignedIn } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isSignedIn) {
+      router.replace("/dashboard");
+    }
+  }, [isSignedIn, router]);
+
   const features = [
     {
       step: "Step 1",
