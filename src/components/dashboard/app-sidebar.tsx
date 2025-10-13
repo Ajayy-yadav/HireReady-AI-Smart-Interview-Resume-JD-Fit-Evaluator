@@ -60,7 +60,7 @@ const items = [
 export function AppSidebar() {
   const { user } = useUser();
   const userID = user?.id;
-  console.log("User ID:", userID);
+  // console.log("User ID:", userID);
   const { signOut } = useClerk();
   const router = useRouter();
   const pathname = usePathname();
