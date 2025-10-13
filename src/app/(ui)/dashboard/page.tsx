@@ -1,32 +1,48 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useUser, useAuth } from "@clerk/nextjs"
-import { useRouter } from "next/navigation"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
-import { Badge } from "@/components/ui/badge"
-import { TrendingUp, Calendar, FileText, Target, Clock, CheckCircle, ArrowRight, Plus, BarChart3 } from "lucide-react"
+import { useState, useEffect } from "react";
+import { useUser, useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import {
+  TrendingUp,
+  Calendar,
+  FileText,
+  Target,
+  Clock,
+  CheckCircle,
+  ArrowRight,
+  Plus,
+  BarChart3,
+} from "lucide-react";
 
 export default function DashboardPage() {
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const { isLoaded, isSignedIn, user } = useUser()
-  const { isLoaded: authLoaded, userId } = useAuth()
-  const router = useRouter()
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { isLoaded, isSignedIn, user } = useUser();
+  const { isLoaded: authLoaded, userId } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     if (authLoaded && !userId) {
-      window.location.href = "/sign-in"
+      window.location.href = "/sign-in";
     }
-  }, [authLoaded, userId])
+  }, [authLoaded, userId]);
 
   if (!authLoaded) {
     return (
       <div className="w-full bg-background flex flex-col items-center justify-center min-h-screen">
         <div className="text-foreground text-xl">Loading session...</div>
       </div>
-    )
+    );
   }
 
   if (!userId) {
@@ -34,7 +50,7 @@ export default function DashboardPage() {
       <div className="w-full bg-background flex flex-col items-center justify-center min-h-screen">
         <div className="text-foreground text-xl">Redirecting to sign-in...</div>
       </div>
-    )
+    );
   }
 
   return (
@@ -46,7 +62,9 @@ export default function DashboardPage() {
             <h1 className="text-3xl font-bold text-foreground text-balance">
               Welcome back, {user?.firstName || "there"}!
             </h1>
-            <p className="text-muted-foreground mt-1">Track your career progress and stay on top of your job search</p>
+            <p className="text-muted-foreground mt-1">
+              Track your career progress and stay on top of your job search
+            </p>
           </div>
           <Button className="w-fit">
             <Plus className="w-4 h-4 mr-2" />
@@ -56,9 +74,11 @@ export default function DashboardPage() {
 
         {/* Key Metrics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="bg-card border-border">
+          <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-card-foreground">Resume Score</CardTitle>
+              <CardTitle className="text-sm font-medium text-card-foreground">
+                Resume Score
+              </CardTitle>
               <BarChart3 className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -73,31 +93,41 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-card border-border">
+          <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-card-foreground">Applications</CardTitle>
+              <CardTitle className="text-sm font-medium text-card-foreground">
+                Applications
+              </CardTitle>
               <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-card-foreground">24</div>
-              <p className="text-xs text-muted-foreground mt-1">8 pending responses</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                8 pending responses
+              </p>
             </CardContent>
           </Card>
 
-          <Card className="bg-card border-border">
+          <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-card-foreground">Interviews</CardTitle>
+              <CardTitle className="text-sm font-medium text-card-foreground">
+                Interviews
+              </CardTitle>
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-card-foreground">3</div>
-              <p className="text-xs text-muted-foreground mt-1">2 scheduled this week</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                2 scheduled this week
+              </p>
             </CardContent>
           </Card>
 
-          <Card className="bg-card border-border">
+          <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-card-foreground">Goal Progress</CardTitle>
+              <CardTitle className="text-sm font-medium text-card-foreground">
+                Goal Progress
+              </CardTitle>
               <Target className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -110,10 +140,14 @@ export default function DashboardPage() {
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Recent Activity */}
-          <Card className="lg:col-span-2 bg-card border-border">
+          <Card className="lg:col-span-2 border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
             <CardHeader>
-              <CardTitle className="text-card-foreground">Recent Activity</CardTitle>
-              <CardDescription>Your latest career development actions</CardDescription>
+              <CardTitle className="text-card-foreground">
+                Recent Activity
+              </CardTitle>
+              <CardDescription>
+                Your latest career development actions
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {[
@@ -142,30 +176,43 @@ export default function DashboardPage() {
                   icon: Calendar,
                 },
               ].map((item, index) => (
-                <div key={index} className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+                <div
+                  key={index}
+                  className="flex items-center gap-3 p-3 rounded-lg bg-muted/50"
+                >
                   <item.icon
                     className={`w-5 h-5 ${
                       item.status === "completed"
                         ? "text-chart-1"
                         : item.status === "pending"
-                          ? "text-chart-2"
-                          : "text-chart-3"
+                        ? "text-chart-2"
+                        : "text-chart-3"
                     }`}
                   />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-card-foreground">{item.action}</p>
+                    <p className="text-sm font-medium text-card-foreground">
+                      {item.action}
+                    </p>
                     <p className="text-xs text-muted-foreground">{item.time}</p>
                   </div>
-                  <Badge variant={item.status === "completed" ? "default" : "secondary"}>{item.status}</Badge>
+                  <Badge
+                    variant={
+                      item.status === "completed" ? "default" : "secondary"
+                    }
+                  >
+                    {item.status}
+                  </Badge>
                 </div>
               ))}
             </CardContent>
           </Card>
 
           {/* Quick Actions */}
-          <Card className="bg-card border-border">
+          <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
             <CardHeader>
-              <CardTitle className="text-card-foreground">Quick Actions</CardTitle>
+              <CardTitle className="text-card-foreground">
+                Quick Actions
+              </CardTitle>
               <CardDescription>Jump to key features</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -198,10 +245,14 @@ export default function DashboardPage() {
         </div>
 
         {/* Upcoming Events */}
-        <Card className="bg-card border-border">
+        <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
           <CardHeader>
-            <CardTitle className="text-card-foreground">Upcoming This Week</CardTitle>
-            <CardDescription>Stay on track with your scheduled activities</CardDescription>
+            <CardTitle className="text-card-foreground">
+              Upcoming This Week
+            </CardTitle>
+            <CardDescription>
+              Stay on track with your scheduled activities
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -228,23 +279,30 @@ export default function DashboardPage() {
                   priority: "low",
                 },
               ].map((event, index) => (
-                <div key={index} className="p-4 rounded-lg border border-border bg-muted/30">
+                <div
+                  key={index}
+                  className="p-4 rounded-lg border border-border bg-muted/30"
+                >
                   <div className="flex items-start justify-between mb-2">
-                    <h4 className="font-medium text-card-foreground text-sm">{event.title}</h4>
+                    <h4 className="font-medium text-card-foreground text-sm">
+                      {event.title}
+                    </h4>
                     <Badge
                       variant={
                         event.priority === "high"
                           ? "destructive"
                           : event.priority === "medium"
-                            ? "default"
-                            : "secondary"
+                          ? "default"
+                          : "secondary"
                       }
                       className="text-xs"
                     >
                       {event.priority}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-1">{event.company}</p>
+                  <p className="text-sm text-muted-foreground mb-1">
+                    {event.company}
+                  </p>
                   <p className="text-xs text-muted-foreground">{event.date}</p>
                 </div>
               ))}
@@ -253,5 +311,5 @@ export default function DashboardPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

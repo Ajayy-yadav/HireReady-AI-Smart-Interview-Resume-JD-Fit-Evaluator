@@ -28,6 +28,7 @@ import Sidebarskele from "@/skeleton-loaders/sidebar-skele";
 
 import UserProfile from "./user/user-profile";
 import { Menu } from "./menu";
+import { GradientButton } from "@/components/ui/gradient-button";
 
 const items = [
   {
@@ -122,36 +123,68 @@ export function AppSidebar() {
                 const isActive = pathname === item.url;
                 return (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      asChild
-                      data-active={isActive}
-                      className="h-12 rounded-xl transition-all duration-200 hover:bg-accent/80 hover:shadow-sm group data-[active=true]:bg-primary data-[active=true]:text-primary-foreground group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:w-10 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:mx-auto"
-                    >
-                      <a
-                        href={item.url}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          router.push(item.url);
-                        }}
-                        className="flex items-center gap-4 px-3 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center"
+                    {isActive ? (
+                      <GradientButton
+                        variant="variant"
+                        asChild
+                        className="h-12 w-full rounded-xl transition-all duration-200 hover:shadow-sm group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:w-10 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:min-w-0 group-data-[collapsible=icon]:px-0 min-w-0 px-3 py-3"
                       >
-                        <div className="flex items-center justify-center w-6 h-6 transition-transform duration-200 group-hover:scale-110 group-data-[collapsible=icon]:w-5 group-data-[collapsible=icon]:h-5">
-                          <item.icon
-                            size={20}
-                            className="text-current group-data-[collapsible=icon]:w-4 group-data-[collapsible=icon]:h-4"
-                          />
-                        </div>
+                        <a
+                          href={item.url}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push(item.url);
+                          }}
+                          className="flex items-center gap-4 px-3 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center"
+                        >
+                          <div className="flex items-center justify-center w-6 h-6 transition-transform duration-200 group-hover:scale-110 group-data-[collapsible=icon]:w-5 group-data-[collapsible=icon]:h-5">
+                            <item.icon
+                              size={20}
+                              className="text-current group-data-[collapsible=icon]:w-4 group-data-[collapsible=icon]:h-4"
+                            />
+                          </div>
 
-                        <div className="flex flex-col flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
-                          <span className="text-sm font-medium text-current truncate">
-                            {item.title}
-                          </span>
-                          <span className="text-xs text-muted-foreground truncate">
-                            {item.description}
-                          </span>
-                        </div>
-                      </a>
-                    </SidebarMenuButton>
+                          <div className="flex flex-col flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
+                            <span className="text-sm font-medium text-current truncate">
+                              {item.title}
+                            </span>
+                            <span className="text-xs text-white/70 truncate">
+                              {item.description}
+                            </span>
+                          </div>
+                        </a>
+                      </GradientButton>
+                    ) : (
+                      <SidebarMenuButton
+                        asChild
+                        className="h-12 rounded-xl transition-all duration-200 hover:bg-accent/80 hover:shadow-sm group group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:w-10 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:mx-auto"
+                      >
+                        <a
+                          href={item.url}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push(item.url);
+                          }}
+                          className="flex items-center gap-4 px-3 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:gap-0 group-data-[collapsible=icon]:justify-center"
+                        >
+                          <div className="flex items-center justify-center w-6 h-6 transition-transform duration-200 group-hover:scale-110 group-data-[collapsible=icon]:w-5 group-data-[collapsible=icon]:h-5">
+                            <item.icon
+                              size={20}
+                              className="text-current group-data-[collapsible=icon]:w-4 group-data-[collapsible=icon]:h-4"
+                            />
+                          </div>
+
+                          <div className="flex flex-col flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
+                            <span className="text-sm font-medium text-current truncate">
+                              {item.title}
+                            </span>
+                            <span className="text-xs text-muted-foreground truncate">
+                              {item.description}
+                            </span>
+                          </div>
+                        </a>
+                      </SidebarMenuButton>
+                    )}
                   </SidebarMenuItem>
                 );
               })}

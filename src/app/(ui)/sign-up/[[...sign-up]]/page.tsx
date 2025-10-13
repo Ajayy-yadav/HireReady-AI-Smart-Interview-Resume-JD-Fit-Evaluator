@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { GradientButton } from "@/components/ui/gradient-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Particles } from "@/components/ui/particles";
@@ -216,26 +217,26 @@ export default function UserSignupPage() {
           {!showOtp ? (
             <>
               <div id="clerk-captcha" />
-              <Button
+              <GradientButton
                 type="button"
-                variant="default"
-                className="w-full mt-4 h-10 rounded-md cursor-pointer"
+                variant="new"
+                className="w-full mt-4 h-10 rounded-md cursor-pointer min-w-0 px-6 py-2"
                 onClick={handleSubmit}
                 disabled={isLoading}
               >
                 {isLoading ? "Processing..." : "Create Account"}
-              </Button>
+              </GradientButton>
             </>
           ) : (
-            <Button
+            <GradientButton
               type="button"
-              variant="default"
-              className="w-full mt-4 h-10 rounded-md"
+              variant="new"
+              className="w-full mt-4 h-10 rounded-md min-w-0 px-6 py-2"
               onClick={handleVerify}
               disabled={isLoading}
             >
               {isLoading ? "Verifying..." : "Verify"}
-            </Button>
+            </GradientButton>
           )}
           <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
             Already have an account?{" "}

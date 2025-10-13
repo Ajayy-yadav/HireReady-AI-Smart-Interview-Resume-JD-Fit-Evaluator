@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { GradientButton } from "@/components/ui/gradient-button";
 import { Input } from "@/components/ui/input";
 import { useSignIn } from "@clerk/nextjs";
 import { Label } from "@radix-ui/react-label";
@@ -169,27 +170,27 @@ export default function LoginPage() {
           </div>
 
           {!showOtp ? (
-            <Button
-              variant="default"
-              className="w-full mt-5 h-10 rounded-md"
+            <GradientButton
+              variant="new"
+              className="w-full mt-5 h-10 rounded-md min-w-0 px-6 py-2"
               onClick={handleSendOtp}
               disabled={!email || isLoading}
             >
               {isLoading ? "Sending..." : "Send Verification Code"}
-            </Button>
+            </GradientButton>
           ) : (
             <div className="flex flex-col gap-2">
-              <Button
-                variant="default"
-                className="w-full h-10 rounded-md"
+              <GradientButton
+                variant="new"
+                className="w-full h-10 rounded-md min-w-0 px-6 py-2"
                 onClick={handleVerifyOtp}
                 disabled={!otp || isLoading}
               >
                 {isLoading ? "Verifying..." : "Login"}
-              </Button>
+              </GradientButton>
               <Button
-                variant="outline"
-                className="w-full h-10 rounded-md"
+                variant="ghost"
+                className="w-full h-7 text-xs rounded-md"
                 onClick={() => {
                   setShowOtp(false);
                   setOtp("");
@@ -201,7 +202,7 @@ export default function LoginPage() {
             </div>
           )}
 
-          <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
+          <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-3">
             Don&apos;t have an account?{" "}
             <button
               onClick={() => router.push("/sign-up")}

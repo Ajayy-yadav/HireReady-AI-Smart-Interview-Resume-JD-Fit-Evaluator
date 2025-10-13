@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { GradientButton } from "@/components/ui/gradient-button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -205,7 +206,7 @@ export default function ResumeAnalysis() {
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6">
           <div className="animate-in slide-in-from-left duration-500">
-            <Card className="shadow-md border bg-white hover:shadow-lg transition-all duration-300">
+            <Card className="shadow-md border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] hover:shadow-lg transition-all duration-300">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <div className="p-1 bg-blue-100 rounded-lg">
@@ -264,10 +265,11 @@ export default function ResumeAnalysis() {
                     </p>
                   </div>
 
-                  <Button
+                  <GradientButton
                     type="submit"
+                    variant="new"
                     disabled={loading}
-                    className="w-full h-9 text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all duration-300"
+                    className="w-full h-9 text-sm font-semibold min-w-0 px-6 py-2"
                   >
                     {loading ? (
                       <>
@@ -280,7 +282,7 @@ export default function ResumeAnalysis() {
                         Analyze Resume
                       </>
                     )}
-                  </Button>
+                  </GradientButton>
                 </form>
               </CardContent>
             </Card>
@@ -289,7 +291,7 @@ export default function ResumeAnalysis() {
           <div className="space-y-3 animate-in slide-in-from-right duration-500">
             {result && showResults ? (
               <>
-                <Card className="shadow-md border bg-white hover:shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-bottom duration-700">
+                <Card className="shadow-md border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] hover:shadow-lg transition-all animate-in fade-in slide-in-from-bottom duration-700">
                   <CardHeader className="text-center pb-2">
                     <CardTitle className="text-base flex items-center justify-center gap-2">
                       <TrendingUp className="w-4 h-4 text-blue-600" />
@@ -317,7 +319,7 @@ export default function ResumeAnalysis() {
                 </Card>
 
                 {/* Missing Skills Card */}
-                <Card className="shadow-md border bg-white hover:shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-bottom delay-100">
+                <Card className="shadow-md border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] hover:shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-bottom delay-100">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-base">
                       <div className="p-1 bg-orange-100 rounded-lg">
@@ -364,7 +366,7 @@ export default function ResumeAnalysis() {
                 </Card>
 
                 {/* Detailed Feedback Card */}
-                <Card className="shadow-md border bg-white hover:shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-bottom  delay-200">
+                <Card className="shadow-md border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] hover:shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-bottom  delay-200">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-base">
                       <div className="p-1 bg-green-100 rounded-lg">
@@ -384,7 +386,7 @@ export default function ResumeAnalysis() {
               </>
             ) : loading ? (
               /* Loading state */
-              <Card className="shadow-md border bg-white">
+              <Card className="shadow-md border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
                 <CardContent className="text-center py-8">
                   <div className="animate-pulse space-y-3">
                     <div className="w-12 h-12 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-full mx-auto animate-spin"></div>
@@ -402,7 +404,7 @@ export default function ResumeAnalysis() {
               </Card>
             ) : (
               /* Empty state */
-              <Card className="shadow-md border-2 border-dashed border-gray-300 bg-white hover:border-blue-400 transition-all duration-300">
+              <Card className="shadow-md border-2 border-dashed border-gray-300 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] hover:border-blue-400 transition-all duration-300">
                 <CardContent className="text-center py-8">
                   <div className="animate-bounce mb-3">
                     <Target className="w-12 h-12 mx-auto text-gray-400" />
