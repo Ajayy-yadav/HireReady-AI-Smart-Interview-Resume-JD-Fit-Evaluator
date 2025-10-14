@@ -12,6 +12,8 @@ import { InterviewProgress } from "./InterviewProgress";
 import { InterviewQuestion } from "./InterviewQuestion";
 import { InterviewTranscript } from "./InterviewTranscript";
 import { MicGuidance } from "./MicGuidance";
+import { useScreenRecording } from "@/hooks/useScreenRecording";
+import { RecordingIndicator } from "./RecordingIndicator";
 
 interface InterviewSessionProps {
   userId: string;
@@ -49,6 +51,16 @@ export default function InterviewSession({
   const [isGeneratingQuestions, setIsGeneratingQuestions] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [userData, setUserData] = useAtom(userDataAtom);
+
+  // Audio recording hook
+  const {
+    isRecording: isAudioRecording,
+    startRecording: startAudioRecording,
+    stopRecording: stopAudioRecording,
+    uploadRecording,
+    getAudioElement,
+    error: recordingError,
+  } = useScreenRecording();
 
   // Fetch user data
   const fetchUserData = async (): Promise<User> => {
@@ -93,12 +105,15 @@ export default function InterviewSession({
       setIsConnected(false);
     });
 
-    socketInstance.on("interview_started", (data: InterviewMessage) => {
+    socketInstance.on("interview_started", async (data: InterviewMessage) => {
       console.log("🎯 Interview started:", data);
       setSessionId(data.sessionId || null);
       setCurrentQuestion(data.currentQuestion || 1);
       setQuestionText(data.content || "");
       setIsGeneratingQuestions(false);
+
+      // Start recording both mic + AI voices
+      await startAudioRecording();
     });
 
     socketInstance.on("question_audio", async (data: InterviewMessage) => {
@@ -108,9 +123,16 @@ export default function InterviewSession({
       try {
         const audioBlob = base64ToBlob(data.audio || "", "audio/wav");
         const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-        audioElementRef.current = audio;
 
+        // Use pre-connected audio element from recording hook
+        const recordingAudio = getAudioElement();
+        const audio = recordingAudio || audioElementRef.current || new Audio();
+
+        if (!audioElementRef.current && !recordingAudio) {
+          audioElementRef.current = audio;
+        }
+
+        audio.src = audioUrl;
         await audio.play();
 
         audio.onended = () => {
@@ -135,11 +157,14 @@ export default function InterviewSession({
       setTranscript("");
     });
 
-    socketInstance.on("interview_completed", (data: InterviewMessage) => {
+    socketInstance.on("interview_completed", async (data: InterviewMessage) => {
       console.log("🎉 Interview completed!");
       stopRecording();
-      if (onComplete && data.sessionId) {
-        onComplete(data.sessionId);
+
+      if (data.sessionId) {
+        await stopAudioRecording();
+        await uploadRecording(data.sessionId);
+        onComplete?.(data.sessionId);
       }
     });
 
@@ -154,8 +179,9 @@ export default function InterviewSession({
     return () => {
       socketInstance.disconnect();
       stopRecording();
+      stopAudioRecording();
     };
-  }, []);
+  }, [stopAudioRecording]);
 
   useEffect(() => {
     if (socket && isConnected && !sessionId) {
@@ -257,6 +283,9 @@ export default function InterviewSession({
 
   return (
     <div className="w-full space-y-6 p-4 sm:p-6 animate-fade-in">
+      {/* Recording Indicator */}
+      <RecordingIndicator isRecording={isAudioRecording} />
+
       {/* Participants */}
       <section
         className="grid grid-cols-1 sm:grid-cols-2 gap-4 animate-scale-in"
@@ -327,7 +356,7 @@ export default function InterviewSession({
       <MicGuidance isRecording={isRecording} isPlayingAudio={isPlayingAudio} />
 
       {/* Error */}
-      {error && (
+      {(error || recordingError) && (
         <Card className="relative rounded-2xl border border-destructive/50 [background:linear-gradient(180deg,#ffebee_0%,#ffebee_60%,#ffcdd2_80%,#ef9a9a_100%)] animate-scale-in">
           <GlowingEffect
             spread={40}
@@ -338,7 +367,14 @@ export default function InterviewSession({
             borderWidth={2}
           />
           <CardContent className="pt-5">
-            <p className="text-sm text-destructive font-medium">{error}</p>
+            {error && (
+              <p className="text-sm text-destructive font-medium">{error}</p>
+            )}
+            {recordingError && (
+              <p className="text-sm text-destructive font-medium">
+                Recording Error: {recordingError}
+              </p>
+            )}
           </CardContent>
         </Card>
       )}

@@ -21,6 +21,7 @@ export interface Interview {
   history: HistoryItem[];
   feedback: Feedback;
   hasFeedback: boolean;
+  recordingKey: string;
   hasVideoRecording: boolean;
   startedAt: string; // ISO datetime string e.g. "2025-10-13T07:25:11.559Z"
   completedAt: string; // ISO datetime string
