@@ -78,9 +78,6 @@ export function AppSidebar() {
     queryKey: ["userData", userID],
     queryFn: fetchUserData,
     enabled: !!userID,
-    select: (data: User) => {
-      return data;
-    },
   });
 
   useEffect(() => {
@@ -90,7 +87,7 @@ export function AppSidebar() {
     if (isError) {
       toast.error("Failed to fetch user data. Please try again later.");
     }
-  }, [isError, data]);
+  }, [isError, data, setUserData]);
 
   console.log(
     "UserImage:",

@@ -27,11 +27,11 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className={`${inter.variable} ${inter.className}`}>
         <body>
-          <ReactQueryProvider>
-            <AppProvider>
-              <JotaiProvider>{children}</JotaiProvider>
-            </AppProvider>
-          </ReactQueryProvider>
+          <JotaiProvider>
+            <ReactQueryProvider>
+              <AppProvider>{children}</AppProvider>
+            </ReactQueryProvider>
+          </JotaiProvider>
           <Toaster position="bottom-right" />
         </body>
       </html>

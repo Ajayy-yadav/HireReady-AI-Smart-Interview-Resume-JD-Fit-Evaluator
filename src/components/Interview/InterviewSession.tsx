@@ -70,18 +70,6 @@ export default function InterviewSession({
     return data;
   };
 
-  const { data: fetchedUserData } = useQuery<User>({
-    queryKey: ["userData", userId],
-    queryFn: fetchUserData,
-    enabled: !!userId,
-  });
-
-  useEffect(() => {
-    if (fetchedUserData) {
-      setUserData(fetchedUserData);
-    }
-  }, [fetchedUserData, setUserData]);
-
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioStreamRef = useRef<MediaStream | null>(null);
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
