@@ -24,19 +24,44 @@ import {
   Plus,
   BarChart3,
 } from "lucide-react";
+import { useAtom } from "jotai";
+import { userDataAtom } from "@/store/atom";
 
 export default function DashboardPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { isLoaded, isSignedIn, user } = useUser();
   const { isLoaded: authLoaded, userId } = useAuth();
   const router = useRouter();
-
+  const [userData] = useAtom(userDataAtom);
   useEffect(() => {
+    
     if (authLoaded && !userId) {
       window.location.href = "/sign-in";
     }
   }, [authLoaded, userId]);
+  console.log("data:",userData);
+  const timeAgo = ({ date }: { date: Date }) => {
+  if (!date || new Date(date).getTime() <= 0) return <span>N/A</span>;
 
+  const now = new Date();
+  const past = new Date(date);
+  const diffInMs = now.getTime() - past.getTime();
+  const diffInMinutes = Math.floor(diffInMs / 60000);
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  const diffInDays = Math.floor(diffInHours / 24);
+  const diffInWeeks = Math.floor(diffInDays / 7);
+  const diffInYears = Math.floor(diffInDays / 365);
+
+  let timeAgoText = "just now";
+
+  if (diffInYears > 0) timeAgoText = `${diffInYears}yr ago`;
+  else if (diffInWeeks > 0) timeAgoText = `${diffInWeeks}wk ago`;
+  else if (diffInDays > 0) timeAgoText = `${diffInDays}d ago`;
+  else if (diffInHours > 0) timeAgoText = `${diffInHours}hr ago`;
+  else if (diffInMinutes > 0) timeAgoText = `${diffInMinutes}min ago`;
+
+  return <span>{timeAgoText}</span>;
+};
   if (!authLoaded) {
     return (
       <div className="w-full bg-background flex flex-col items-center justify-center min-h-screen">
@@ -44,7 +69,7 @@ export default function DashboardPage() {
       </div>
     );
   }
-
+ 
   if (!userId) {
     return (
       <div className="w-full bg-background flex flex-col items-center justify-center min-h-screen">
@@ -52,7 +77,7 @@ export default function DashboardPage() {
       </div>
     );
   }
-
+  
   return (
     <div className="min-h-screen bg-background p-4 md:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
@@ -82,9 +107,9 @@ export default function DashboardPage() {
               <BarChart3 className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-card-foreground">85%</div>
+              <div className="text-2xl font-bold text-card-foreground">{userData?.latestResumeScore?userData.latestResumeScore:0}%</div>
               <div className="flex items-center gap-2 mt-2">
-                <Progress value={85} className="flex-1" />
+                <Progress value={userData?.latestResumeScore?userData.latestResumeScore:0} className="flex-1" />
                 <Badge variant="secondary" className="text-xs">
                   <TrendingUp className="w-3 h-3 mr-1" />
                   +5%
@@ -116,9 +141,9 @@ export default function DashboardPage() {
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-card-foreground">3</div>
+              <div className="text-2xl font-bold text-card-foreground">{userData?.totalInterviews?userData.totalInterviews:0}</div>
               <p className="text-xs text-muted-foreground mt-1">
-                2 scheduled this week
+                Attended
               </p>
             </CardContent>
           </Card>
@@ -131,8 +156,8 @@ export default function DashboardPage() {
               <Target className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-card-foreground">67%</div>
-              <Progress value={67} className="mt-2" />
+              <div className="text-2xl font-bold text-card-foreground">{userData?.latestInterviewScore?userData.latestInterviewScore:0}%</div>
+              <Progress value={userData?.latestInterviewScore?userData.latestInterviewScore:0} className="mt-2" />
             </CardContent>
           </Card>
         </div>
@@ -149,32 +174,22 @@ export default function DashboardPage() {
                 Your latest career development actions
               </CardDescription>
             </CardHeader>
+            {userData?.lastResumeAnalysisAt && userData?.lastInterviewCompletedAt?
             <CardContent className="space-y-4">
               {[
                 {
                   action: "Resume updated",
-                  time: "2 hours ago",
+                  time: timeAgo({ date: new Date(userData?.lastResumeAnalysisAt )}),
                   status: "completed",
                   icon: CheckCircle,
                 },
                 {
                   action: "Mock interview completed",
-                  time: "1 day ago",
+                  time: timeAgo({  date:new Date(userData.lastInterviewCompletedAt)}),
                   status: "completed",
                   icon: CheckCircle,
                 },
-                {
-                  action: "Application submitted to TechCorp",
-                  time: "2 days ago",
-                  status: "pending",
-                  icon: Clock,
-                },
-                {
-                  action: "Interview scheduled with StartupXYZ",
-                  time: "3 days ago",
-                  status: "upcoming",
-                  icon: Calendar,
-                },
+                
               ].map((item, index) => (
                 <div
                   key={index}
@@ -205,6 +220,7 @@ export default function DashboardPage() {
                 </div>
               ))}
             </CardContent>
+      :<p className="text-center">No recent activity found.</p>}
           </Card>
 
           {/* Quick Actions */}
@@ -243,72 +259,6 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
         </div>
-
-        {/* Upcoming Events */}
-        <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
-          <CardHeader>
-            <CardTitle className="text-card-foreground">
-              Upcoming This Week
-            </CardTitle>
-            <CardDescription>
-              Stay on track with your scheduled activities
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[
-                {
-                  title: "Technical Interview",
-                  company: "TechCorp",
-                  date: "Tomorrow, 2:00 PM",
-                  type: "interview",
-                  priority: "high",
-                },
-                {
-                  title: "Resume Review Session",
-                  company: "Career Coach",
-                  date: "Friday, 10:00 AM",
-                  type: "session",
-                  priority: "medium",
-                },
-                {
-                  title: "Follow-up Email",
-                  company: "StartupXYZ",
-                  date: "Monday, 9:00 AM",
-                  type: "task",
-                  priority: "low",
-                },
-              ].map((event, index) => (
-                <div
-                  key={index}
-                  className="p-4 rounded-lg border border-border bg-muted/30"
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="font-medium text-card-foreground text-sm">
-                      {event.title}
-                    </h4>
-                    <Badge
-                      variant={
-                        event.priority === "high"
-                          ? "destructive"
-                          : event.priority === "medium"
-                          ? "default"
-                          : "secondary"
-                      }
-                      className="text-xs"
-                    >
-                      {event.priority}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-1">
-                    {event.company}
-                  </p>
-                  <p className="text-xs text-muted-foreground">{event.date}</p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );

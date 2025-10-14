@@ -118,7 +118,7 @@ export default function InterviewComplete({
                         Overall Score
                       </p>
                       <p className="text-2xl font-bold text-card-foreground">
-                        {feedback.feedback.overallScore} / 5
+                        {feedback.feedback.overallScore} / 10
                       </p>
                     </div>
                   </div>

@@ -23,6 +23,7 @@ import {
   TrendingUp,
   Sparkles,
 } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
 
 export default function ResumeAnalysis() {
   const [file, setFile] = useState<File | null>(null);
@@ -30,7 +31,8 @@ export default function ResumeAnalysis() {
   const [result, setResult] = useState<ResumeAnalysisResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
-
+  const {user}=useUser();
+  const user_id=user?.id;
   interface ResumeAnalysisResult {
     compatibilityScore: number;
     candidateName: string;
@@ -69,7 +71,7 @@ export default function ResumeAnalysis() {
       formData.append("jobDescription", jobDescription);
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/resume-analysis/analyze`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/resume-analysis/analyze/${user_id}`,
         formData
       );
 

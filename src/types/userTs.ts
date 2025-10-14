@@ -1,10 +1,16 @@
 export interface User {
   id: string;
   email: string;
-  imageKey: string | null;
+  imageKey: string;
   username: string;
   currentRole: string;
-  resumeUrl: string | null;
-  createdAt: string; // ISO date string
-  updatedAt: string; // ISO date string
+  createdAt: string;
+  updatedAt: string;
+  lastInterviewCompletedAt: string | null;
+  lastResumeAnalysisAt: string | null;
+  latestInterviewScore: number | null;
+  latestResumeScore: number | null;
+  resumeKey: string | null;
+  totalInterviews: number;
 }
+

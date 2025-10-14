@@ -138,7 +138,7 @@ function InterviewCard({ interview }: { interview: Interview }) {
                         Overall Score
                       </p>
                       <p className="text-xl font-bold text-card-foreground">
-                        {interview.feedback.overallScore} / 5
+                        {interview.feedback.overallScore} / 10
                       </p>
                     </div>
                   </div>
