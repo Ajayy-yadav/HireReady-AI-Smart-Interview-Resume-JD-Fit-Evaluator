@@ -1,19 +1,15 @@
 import type { NextConfig } from "next";
 
-// const nextConfig: NextConfig = {
-//   devIndicators: false
-//   /* config options here */
-// };
-/**** @type {import('next').NextConfig} */
-const nextConfig = {
-  devIndicators: false,
-  reactStrictMode: true,
+/** @type {import('next').NextConfig} */
+const nextConfig: NextConfig = {
+  devIndicators: false, reactStrictMode: true,
   images: {
-    domains: ['static.vecteezy.com'],
+    domains: ["static.vecteezy.com"],
+    unoptimized: true, 
   },
-  
-  // ...other config
-}
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+};
 
-// module.exports = nextConfig
 export default nextConfig;

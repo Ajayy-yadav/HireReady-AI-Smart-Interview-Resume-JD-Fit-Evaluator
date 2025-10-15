@@ -31,60 +31,64 @@ export function Editpopup() {
   const userID = user?.id;
   const [userData, setUserData] = useAtom(userDataAtom);
   const { isUploading, error, uploadedData, uploadImage } =
-  useBase64ImageUpload();
+    useBase64ImageUpload();
   const [username, setUsername] = useState(userData?.username || "");
   const [role, setRole] = useState(userData?.currentRole || "");
   const [isLoading, setIsLoading] = useState(false);
 
   const [profileImage, setProfileImage] = useState(userData?.imageKey || "");
-const [newImage, setNewImage] = useState<string | null>(null);
-const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [newImage, setNewImage] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const file = e.target.files?.[0];
-  if (file) {
-    setSelectedFile(file);
-    setNewImage(URL.createObjectURL(file));
-  }
-};
-
-const handleUserUpdates = async () => {
-  setIsLoading(true);
-  try {
-    let imageKey = profileImage;
-
-    if (selectedFile) {
-      const uploadResult = await uploadImage(selectedFile, userID as string);
-      imageKey = uploadResult.key || uploadResult.imageKey || imageKey;
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      setNewImage(URL.createObjectURL(file));
     }
+  };
 
-    const newUserData = {
-      username,
-      currentRole: role,
-      imageKey, // ✅ consistent naming
-    };
+  const handleUserUpdates = async () => {
+    setIsLoading(true);
+    try {
+      let imageKey = profileImage;
 
-    const response = await axios.patch<User>(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/update/${userID}`,
-      newUserData
-    );
+      if (selectedFile) {
+        const uploadResult = await uploadImage(selectedFile, userID as string);
+        imageKey = uploadResult.key || uploadResult.imageKey || imageKey;
+      }
 
-    if (response.status === 200) {
-      setUserData(response.data);
-      toast.success("Profile updated successfully!");
+      const newUserData = {
+        username,
+        currentRole: role,
+        imageKey,
+      };
+
+      const response = await axios.patch<User>(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/update/${userID}`,
+        newUserData
+      );
+
+      if (response.status === 200) {
+        setUserData(response.data);
+        setNewImage(null);
+        setSelectedFile(null);
+        toast.success("Profile updated successfully!");
+      }
+    } catch (error: any) {
+      const message =
+        error.response?.data?.message ||
+        "Failed to update profile. Please try again.";
+      toast.error(message);
+    } finally {
+      setIsLoading(false);
     }
-  } catch (error: any) {
-    const message = error.response?.data?.message || "Failed to update profile. Please try again.";
-    toast.error(message);
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   useEffect(() => {
     setUsername(userData?.username || "");
     setRole(userData?.currentRole || "");
-    setProfileImage(userData?.imageKey|| "");
+    setProfileImage(userData?.imageKey || "");
   }, [userData]);
 
   if (!userData) {
@@ -96,9 +100,8 @@ const handleUserUpdates = async () => {
       <form>
         <DialogTrigger asChild>
           <div className="flex items-center gap-4 justify-center cursor-pointer">
-            
-              <FaUserEdit className="h-4 w-4"/>
-  
+            <FaUserEdit className="h-4 w-4" />
+
             <p className="font-medium">Edit Profile</p>
           </div>
         </DialogTrigger>
@@ -106,7 +109,8 @@ const handleUserUpdates = async () => {
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you&apos;re done.
+              Make changes to your profile here. Click save when you&apos;re
+              done.
             </DialogDescription>
           </DialogHeader>
 
@@ -119,22 +123,29 @@ const handleUserUpdates = async () => {
               {/* Profile Image with edit icon */}
               <div className="flex justify-center">
                 <div className="relative">
-                  {userData && userData.imageKey?(
-
-                      <UserProfile
-                        id={userData.id}
-                        image={profileImage}
-                        avatarStyles="rounded-full h-20 w-20 object-cover"
-                      />
-                  ):(
-                      <Image
-                      src={newImage||"/assets/User.png"}
+                  {newImage ? (
+                    <Image
+                      src={newImage}
                       height="100"
                       width="100"
                       alt="userimage"
-                      className="rounded-full h-10 w-10 object-cover"
-                      />
-                    )}
+                      className="rounded-full h-20 w-20 object-cover"
+                    />
+                  ) : userData && userData.imageKey ? (
+                    <UserProfile
+                      id={userData.id}
+                      image={profileImage}
+                      avatarStyles="rounded-full h-20 w-20 object-cover"
+                    />
+                  ) : (
+                    <Image
+                      src="/assets/User.png"
+                      height="100"
+                      width="100"
+                      alt="userimage"
+                      className="rounded-full h-20 w-20 object-cover"
+                    />
+                  )}
                   <label
                     htmlFor="imageUpload"
                     className="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow cursor-pointer"

@@ -233,9 +233,9 @@ const HeroHeader = () => {
               >
                 {/* <Logo /> */}
                 <Image
-                  src="/assets/logo-transparent1-svg.svg"
-                  height="250"
-                  width="250"
+                  src="/assets/hire-ready.svg"
+                  height="150"
+                  width="150"
                   alt="logo"
                 />
                 {/* <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
