@@ -43,10 +43,12 @@ export function FeatureSteps({
   }, [progress, features.length, autoPlayInterval]);
 
   return (
-    <div className={cn("p-8 md:p-12 Features", className)}>
+    <div className={cn("p-8 md:p-8 Steps", className)}>
       <div className="max-w-7xl mx-auto w-full">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 text-center">
-          {title}
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 text-center">Your Job {" "}
+          <span className="bg-gradient-to-r from-[#000020] via-[#f1ffa5] via-[#469396] via-[#1f3f6d] to-[#000000] bg-clip-text text-transparent">
+                      Prep Journey
+                    </span>
         </h2>
 
         <div className="py-15 flex flex-col md:grid md:grid-cols-2 gap-6 md:gap-10">

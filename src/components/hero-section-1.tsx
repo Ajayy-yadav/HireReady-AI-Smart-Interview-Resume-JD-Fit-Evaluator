@@ -108,7 +108,7 @@ export function HeroSection() {
 
                   <h1 className="mt-8 max-w-4xl mx-auto text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem] font-semibold">
                     Land Your Dream Role with{" "}
-                    <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-[#000020] via-[#f1ffa5] via-[#469396] via-[#1f3f6d] to-[#000000] bg-clip-text text-transparent">
                       AI‑Powered Interview Coaching
                     </span>
                   </h1>
