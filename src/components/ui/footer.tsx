@@ -60,7 +60,7 @@ export function Footer({
             ))}
           </ul>
         </div>
-        <div className="border-t mt-6 pt-6 md:mt-4 md:pt-8 flex justify-between">
+        <div className="flex items-center justify-between">
           <div className="mt-6 text-sm leading-6 text-muted-foreground whitespace-nowrap lg:mt-0 lg:row-[1/3] lg:col-[1/4]">
             <div>{copyright.text}</div>
             {copyright.license && <div>{copyright.license}</div>}
@@ -80,6 +80,9 @@ export function Footer({
               ))}
             </ul>
           </div>
+        </div>
+        <div className="border-t mt-6 pt-6 md:mt-4 md:pt-8 flex justify-between">
+          
         </div>
       </div>
       <div className="lg:h-[17rem] md:h-[9rem] sm:h-[7rem] h-[5.5rem] flex items-center justify-center">

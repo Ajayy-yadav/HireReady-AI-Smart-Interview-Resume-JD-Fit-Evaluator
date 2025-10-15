@@ -27,6 +27,7 @@ import {
 import { useAtom } from "jotai";
 import { userDataAtom } from "@/store/atom";
 import { GradientBackground } from "@/components/GradientBackground";
+import { DashboardSkeleton } from "@/skeleton-loaders/dashboard-skele";
 
 export default function DashboardPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -62,13 +63,9 @@ export default function DashboardPage() {
 
     return <span>{timeAgoText}</span>;
   };
-  if (!authLoaded) {
-    return (
-      <div className="w-full bg-background flex flex-col items-center justify-center min-h-screen">
-        <div className="text-foreground text-xl">Loading Dashboard...</div>
-      </div>
-    );
-  }
+  if (!authLoaded || !isLoaded) {
+  return <DashboardSkeleton />;
+}
 
   if (!userId) {
     return (
@@ -94,10 +91,7 @@ export default function DashboardPage() {
               Track your career progress and stay on top of your job search
             </p>
           </div>
-          <Button className="w-fit">
-            <Plus className="w-4 h-4 mr-2" />
-            Quick Action
-          </Button>
+          <div></div>
         </div>
 
         {/* Key Metrics Cards */}
