@@ -34,42 +34,41 @@ export default function DashboardPage() {
   const router = useRouter();
   const [userData] = useAtom(userDataAtom);
   useEffect(() => {
-    
     if (authLoaded && !userId) {
       window.location.href = "/sign-in";
     }
   }, [authLoaded, userId]);
-  console.log("data:",userData);
+  console.log("data:", userData);
   const timeAgo = ({ date }: { date: Date }) => {
-  if (!date || new Date(date).getTime() <= 0) return <span>N/A</span>;
+    if (!date || new Date(date).getTime() <= 0) return <span>N/A</span>;
 
-  const now = new Date();
-  const past = new Date(date);
-  const diffInMs = now.getTime() - past.getTime();
-  const diffInMinutes = Math.floor(diffInMs / 60000);
-  const diffInHours = Math.floor(diffInMinutes / 60);
-  const diffInDays = Math.floor(diffInHours / 24);
-  const diffInWeeks = Math.floor(diffInDays / 7);
-  const diffInYears = Math.floor(diffInDays / 365);
+    const now = new Date();
+    const past = new Date(date);
+    const diffInMs = now.getTime() - past.getTime();
+    const diffInMinutes = Math.floor(diffInMs / 60000);
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+    const diffInWeeks = Math.floor(diffInDays / 7);
+    const diffInYears = Math.floor(diffInDays / 365);
 
-  let timeAgoText = "just now";
+    let timeAgoText = "just now";
 
-  if (diffInYears > 0) timeAgoText = `${diffInYears}yr ago`;
-  else if (diffInWeeks > 0) timeAgoText = `${diffInWeeks}wk ago`;
-  else if (diffInDays > 0) timeAgoText = `${diffInDays}d ago`;
-  else if (diffInHours > 0) timeAgoText = `${diffInHours}hr ago`;
-  else if (diffInMinutes > 0) timeAgoText = `${diffInMinutes}min ago`;
+    if (diffInYears > 0) timeAgoText = `${diffInYears}yr ago`;
+    else if (diffInWeeks > 0) timeAgoText = `${diffInWeeks}wk ago`;
+    else if (diffInDays > 0) timeAgoText = `${diffInDays}d ago`;
+    else if (diffInHours > 0) timeAgoText = `${diffInHours}hr ago`;
+    else if (diffInMinutes > 0) timeAgoText = `${diffInMinutes}min ago`;
 
-  return <span>{timeAgoText}</span>;
-};
+    return <span>{timeAgoText}</span>;
+  };
   if (!authLoaded) {
     return (
       <div className="w-full bg-background flex flex-col items-center justify-center min-h-screen">
-        <div className="text-foreground text-xl">Loading session...</div>
+        <div className="text-foreground text-xl">Loading Dashboard...</div>
       </div>
     );
   }
- 
+
   if (!userId) {
     return (
       <div className="w-full bg-background flex flex-col items-center justify-center min-h-screen">
@@ -77,7 +76,7 @@ export default function DashboardPage() {
       </div>
     );
   }
-  
+
   return (
     <div className="min-h-screen bg-background p-4 md:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
@@ -107,9 +106,16 @@ export default function DashboardPage() {
               <BarChart3 className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-card-foreground">{userData?.latestResumeScore?userData.latestResumeScore:0}%</div>
+              <div className="text-2xl font-bold text-card-foreground">
+                {userData?.latestResumeScore ? userData.latestResumeScore : 0}%
+              </div>
               <div className="flex items-center gap-2 mt-2">
-                <Progress value={userData?.latestResumeScore?userData.latestResumeScore:0} className="flex-1" />
+                <Progress
+                  value={
+                    userData?.latestResumeScore ? userData.latestResumeScore : 0
+                  }
+                  className="flex-1"
+                />
                 <Badge variant="secondary" className="text-xs">
                   <TrendingUp className="w-3 h-3 mr-1" />
                   +5%
@@ -141,10 +147,10 @@ export default function DashboardPage() {
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-card-foreground">{userData?.totalInterviews?userData.totalInterviews:0}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                Attended
-              </p>
+              <div className="text-2xl font-bold text-card-foreground">
+                {userData?.totalInterviews ? userData.totalInterviews : 0}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">Attended</p>
             </CardContent>
           </Card>
 
@@ -156,8 +162,20 @@ export default function DashboardPage() {
               <Target className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-card-foreground">{userData?.latestInterviewScore?userData.latestInterviewScore:0}%</div>
-              <Progress value={userData?.latestInterviewScore?userData.latestInterviewScore:0} className="mt-2" />
+              <div className="text-2xl font-bold text-card-foreground">
+                {userData?.latestInterviewScore
+                  ? userData.latestInterviewScore
+                  : 0}
+                %
+              </div>
+              <Progress
+                value={
+                  userData?.latestInterviewScore
+                    ? userData.latestInterviewScore
+                    : 0
+                }
+                className="mt-2"
+              />
             </CardContent>
           </Card>
         </div>
@@ -174,53 +192,50 @@ export default function DashboardPage() {
                 Your latest career development actions
               </CardDescription>
             </CardHeader>
-            {userData?.lastResumeAnalysisAt && userData?.lastInterviewCompletedAt?
             <CardContent className="space-y-4">
-              {[
-                {
-                  action: "Resume updated",
-                  time: timeAgo({ date: new Date(userData?.lastResumeAnalysisAt )}),
-                  status: "completed",
-                  icon: CheckCircle,
-                },
-                {
-                  action: "Mock interview completed",
-                  time: timeAgo({  date:new Date(userData.lastInterviewCompletedAt)}),
-                  status: "completed",
-                  icon: CheckCircle,
-                },
-                
-              ].map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-muted/50"
-                >
-                  <item.icon
-                    className={`w-5 h-5 ${
-                      item.status === "completed"
-                        ? "text-chart-1"
-                        : item.status === "pending"
-                        ? "text-chart-2"
-                        : "text-chart-3"
-                    }`}
-                  />
+              {userData?.lastResumeAnalysisAt ? (
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+                  <CheckCircle className="w-5 h-5 text-chart-1" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-card-foreground">
-                      {item.action}
+                      Resume updated
                     </p>
-                    <p className="text-xs text-muted-foreground">{item.time}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {timeAgo({
+                        date: userData.lastResumeAnalysisAt
+                          ? new Date(userData.lastResumeAnalysisAt)
+                          : new Date(),
+                      })}
+                    </p>
                   </div>
-                  <Badge
-                    variant={
-                      item.status === "completed" ? "default" : "secondary"
-                    }
-                  >
-                    {item.status}
-                  </Badge>
+                  <Badge variant="default">completed</Badge>
                 </div>
-              ))}
+              ) : null}
+              {userData?.lastInterviewCompletedAt ? (
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+                  <CheckCircle className="w-5 h-5 text-chart-1" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-card-foreground">
+                      Mock interview completed
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {timeAgo({
+                        date: userData.lastInterviewCompletedAt
+                          ? new Date(userData.lastInterviewCompletedAt)
+                          : new Date(),
+                      })}
+                    </p>
+                  </div>
+                  <Badge variant="default">completed</Badge>
+                </div>
+              ) : null}
+              {!userData?.lastResumeAnalysisAt &&
+                !userData?.lastInterviewCompletedAt && (
+                  <div className="flex items-center justify-center h-full">
+                    <p className="text-center">No recent activity found.</p>
+                  </div>
+                )}
             </CardContent>
-      :<p className="text-center">No recent activity found.</p>}
           </Card>
 
           {/* Quick Actions */}
