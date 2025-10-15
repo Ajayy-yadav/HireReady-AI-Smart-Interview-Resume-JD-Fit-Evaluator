@@ -5,6 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import InterviewSetup from "@/components/Interview/InterviewSetup";
 import InterviewSession from "@/components/Interview/InterviewSession";
 import InterviewComplete from "@/components/Interview/InterviewComplete";
+import { GradientBackground } from "@/components/GradientBackground";
 
 type InterviewStage = "setup" | "interview" | "complete";
 
@@ -34,8 +35,9 @@ export default function MockInterviewPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background p-4 md:p-6 lg:p-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen p-4 md:p-6 lg:p-8 relative overflow-hidden">
+      <GradientBackground />
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <div className=" text-center">
           <h1 className="text-3xl font-bold text-foreground">

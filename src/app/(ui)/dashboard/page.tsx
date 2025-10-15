@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { useAtom } from "jotai";
 import { userDataAtom } from "@/store/atom";
+import { GradientBackground } from "@/components/GradientBackground";
 
 export default function DashboardPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -78,8 +79,11 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-4 md:p-6 lg:p-8">
-      <div className="max-w-7xl mx-auto space-y-6">
+    // <div className="min-h-screen bg-background p-4 md:p-6 lg:p-8">
+    //   <div className="max-w-7xl mx-auto space-y-6">
+    <div className="min-h-screen p-4 md:p-6 lg:p-8 relative overflow-hidden">
+      <GradientBackground />
+      <div className="max-w-7xl mx-auto space-y-6 relative z-10">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>

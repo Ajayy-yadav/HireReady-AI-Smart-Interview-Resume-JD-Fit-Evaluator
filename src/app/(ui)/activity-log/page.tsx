@@ -18,6 +18,7 @@ import {
   Lightbulb,
 } from "lucide-react";
 import VoiceUI from "@/components/dashboard/user/voice-ui";
+import { GradientBackground } from "@/components/GradientBackground";
 
 function InterviewCard({ interview }: { interview: Interview }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -283,39 +284,42 @@ export default function ActivityLog() {
   });
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-card-foreground">
-          Interview Activity Log
-        </h1>
-        <p className="text-base text-muted-foreground mt-1">
-          View your completed interviews and performance feedback
-        </p>
-      </div>
-
-      {isLoading ? (
-        <div className="text-center py-12 space-y-4">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent" />
-          <p className="text-sm text-muted-foreground">
-            Loading your interview history...
+    <div className="min-h-screen p-4 md:p-6 lg:p-8 relative overflow-hidden">
+      <GradientBackground />
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="mb-6">
+          <h1 className="text-2xl font-semibold text-card-foreground">
+            Interview Activity Log
+          </h1>
+          <p className="text-base text-muted-foreground mt-1">
+            View your completed interviews and performance feedback
           </p>
         </div>
-      ) : history && history.interviews.length > 0 ? (
-        <div className="space-y-4">
-          {history.interviews.map((interview) => (
-            <InterviewCard key={interview.sessionId} interview={interview} />
-          ))}
-        </div>
-      ) : (
-        <Card className="w-full border border-black/10">
-          <CardContent className="p-12 text-center">
-            <p className="text-base text-muted-foreground">
-              No completed interviews yet. Start your first interview to see
-              your activity here!
+
+        {isLoading ? (
+          <div className="text-center py-12 space-y-4">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent" />
+            <p className="text-sm text-muted-foreground">
+              Loading your interview history...
             </p>
-          </CardContent>
-        </Card>
-      )}
+          </div>
+        ) : history && history.interviews.length > 0 ? (
+          <div className="space-y-4">
+            {history.interviews.map((interview) => (
+              <InterviewCard key={interview.sessionId} interview={interview} />
+            ))}
+          </div>
+        ) : (
+          <Card className="w-full border border-black/10">
+            <CardContent className="p-12 text-center">
+              <p className="text-base text-muted-foreground">
+                No completed interviews yet. Start your first interview to see
+                your activity here!
+              </p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
     </div>
   );
 }

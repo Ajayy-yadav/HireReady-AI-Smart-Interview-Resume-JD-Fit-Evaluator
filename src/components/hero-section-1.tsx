@@ -7,6 +7,7 @@ import { AnimatedGroup } from "@/components/ui/animated-group";
 import { cn } from "@/lib/utils";
 import { HeroVideoDialog } from "./ui/hero-video-dialog";
 import Image from "next/image";
+import { Typewriter } from "./ui/typewriter";
 
 const transitionVariants = {
   item: {
@@ -86,11 +87,11 @@ export function HeroSection() {
               <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
                 <AnimatedGroup variants={transitionVariants}>
                   <Link
-                    href="#link"
+                    href="/sign-up"
                     className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-black/5 transition-all duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
                   >
                     <span className="text-foreground text-sm">
-                      Introducing Support for AI Models
+                      Sign up now to access AI‑powered interview tools!
                     </span>
                     <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
 
@@ -133,31 +134,24 @@ export function HeroSection() {
                   }}
                   className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
                 >
-                  <div
-                    key={1}
-                    className="bg-foreground/10 rounded-[14px] border p-0.5"
-                  >
-                    <Button
-                      asChild
-                      size="lg"
-                      className="rounded-xl px-5 text-base"
-                    >
-                      <Link href="#link">
-                        <span className="text-nowrap">Start Building</span>
-                      </Link>
-                    </Button>
+                  <div className="text-xs md:text-sm font-medium text-foreground">
+                    <span>Ready to </span>
+                    <Typewriter
+                      text={[
+                        "🎯 Ace Your Next Interview",
+                        "⚡ Get Instant Feedback",
+                        "🤖 Practice with AI",
+                        "🚀 Land Your Dream Job",
+                      ]}
+                      speed={80}
+                      deleteSpeed={50}
+                      waitTime={2500}
+                      loop={true}
+                      showCursor={true}
+                      cursorChar="|"
+                      cursorClassName="text-foreground"
+                    />
                   </div>
-                  <Button
-                    key={2}
-                    asChild
-                    size="lg"
-                    variant="ghost"
-                    className="h-10.5 rounded-xl px-5"
-                  >
-                    <Link href="#link">
-                      <span className="text-nowrap">Request a demo</span>
-                    </Link>
-                  </Button>
                 </AnimatedGroup>
               </div>
             </div>

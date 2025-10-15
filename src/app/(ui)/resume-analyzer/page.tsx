@@ -24,6 +24,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
+import { GradientBackground } from "@/components/GradientBackground";
 
 export default function ResumeAnalysis() {
   const [file, setFile] = useState<File | null>(null);
@@ -31,8 +32,8 @@ export default function ResumeAnalysis() {
   const [result, setResult] = useState<ResumeAnalysisResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const {user}=useUser();
-  const user_id=user?.id;
+  const { user } = useUser();
+  const user_id = user?.id;
   interface ResumeAnalysisResult {
     compatibilityScore: number;
     candidateName: string;
@@ -190,17 +191,15 @@ export default function ResumeAnalysis() {
   };
 
   return (
-    <div className=" p-3 sm:p-4 lg:p-6">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-6 animate-in fade-in duration-700">
-          <div className="inline-flex items-center gap-2 mb-2">
-            <Sparkles className="w-5 h-5 text-blue-600 animate-pulse" />
-            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent animate-in zoom-in duration-1000">
-              Resume Analysis
-            </h1>
-            <Sparkles className="w-5 h-5 text-indigo-600 animate-pulse" />
-          </div>
-          <p className="text-base text-gray-600 max-w-lg mx-auto leading-relaxed animate-in slide-in-from-bottom duration-1000 delay-200">
+    <div className="min-h-screen p-4 md:p-6 lg:p-8 relative overflow-hidden">
+      <GradientBackground />
+      <div className="max-w-5xl mx-auto relative z-10">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-foreground">
+            Resume Analysis
+          </h1>
+          <p className="text-muted-foreground mt-2">
             Upload your resume and job description to get AI-powered
             compatibility insights
           </p>
