@@ -7,6 +7,7 @@ import { AnimatedGroup } from "@/components/ui/animated-group";
 import { cn } from "@/lib/utils";
 import { HeroVideoDialog } from "./ui/hero-video-dialog";
 import Image from "next/image";
+import { Typewriter } from "./ui/typewriter";
 
 const transitionVariants = {
   item: {
@@ -86,11 +87,11 @@ export function HeroSection() {
               <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
                 <AnimatedGroup variants={transitionVariants}>
                   <Link
-                    href="#link"
+                    href="/sign-up"
                     className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-black/5 transition-all duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
                   >
                     <span className="text-foreground text-sm">
-                      Introducing Support for AI Models
+                      Sign up now to access AI‑powered interview tools!
                     </span>
                     <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
 
@@ -108,7 +109,7 @@ export function HeroSection() {
 
                   <h1 className="mt-8 max-w-4xl mx-auto text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem] font-semibold">
                     Land Your Dream Role with{" "}
-                    <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-[#000020] via-[#f1ffa5] via-[#469396] via-[#1f3f6d] to-[#000000] bg-clip-text text-transparent">
                       AI‑Powered Interview Coaching
                     </span>
                   </h1>
@@ -133,31 +134,24 @@ export function HeroSection() {
                   }}
                   className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
                 >
-                  <div
-                    key={1}
-                    className="bg-foreground/10 rounded-[14px] border p-0.5"
-                  >
-                    <Button
-                      asChild
-                      size="lg"
-                      className="rounded-xl px-5 text-base"
-                    >
-                      <Link href="#link">
-                        <span className="text-nowrap">Start Building</span>
-                      </Link>
-                    </Button>
+                  <div className="text-xs md:text-sm font-medium text-foreground">
+                    <span>Ready to </span>
+                    <Typewriter
+                      text={[
+                        "🎯 Ace Your Next Interview",
+                        "⚡ Get Instant Feedback",
+                        "🤖 Practice with AI",
+                        "🚀 Land Your Dream Job",
+                      ]}
+                      speed={80}
+                      deleteSpeed={50}
+                      waitTime={2500}
+                      loop={true}
+                      showCursor={true}
+                      cursorChar="|"
+                      cursorClassName="text-foreground"
+                    />
                   </div>
-                  <Button
-                    key={2}
-                    asChild
-                    size="lg"
-                    variant="ghost"
-                    className="h-10.5 rounded-xl px-5"
-                  >
-                    <Link href="#link">
-                      <span className="text-nowrap">Request a demo</span>
-                    </Link>
-                  </Button>
                 </AnimatedGroup>
               </div>
             </div>
@@ -230,7 +224,7 @@ const HeroHeader = () => {
               "bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5"
           )}
         >
-          <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
+          <div className="relative flex flex-wrap items-center justify-between gap-6  lg:gap-0 ">
             <div className="flex w-full justify-between lg:w-auto">
               <Link
                 href="/"
@@ -239,14 +233,14 @@ const HeroHeader = () => {
               >
                 {/* <Logo /> */}
                 <Image
-                  src="/assets/online-recruitment.png"
-                  height="30"
-                  width="30"
+                  src="/assets/hire-ready.svg"
+                  height="150"
+                  width="150"
                   alt="logo"
                 />
-                <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
+                {/* <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
                   HireReady-AI
-                </span>
+                </span> */}
               </Link>
 
               <button
@@ -306,7 +300,7 @@ const HeroHeader = () => {
                   size="sm"
                   className={cn(isScrolled && "lg:hidden")}
                 >
-                  <Link href="#">
+                  <Link href="/sign-in">
                     <span>Login</span>
                   </Link>
                 </Button>
@@ -315,7 +309,7 @@ const HeroHeader = () => {
                   size="sm"
                   className={cn(isScrolled && "lg:hidden")}
                 >
-                  <Link href="#">
+                  <Link href="/sign-up">
                     <span>Sign Up</span>
                   </Link>
                 </Button>
@@ -324,7 +318,7 @@ const HeroHeader = () => {
                   size="sm"
                   className={cn(isScrolled ? "lg:inline-flex" : "hidden")}
                 >
-                  <Link href="#">
+                  <Link href="/sign-up">
                     <span>Get Started</span>
                   </Link>
                 </Button>

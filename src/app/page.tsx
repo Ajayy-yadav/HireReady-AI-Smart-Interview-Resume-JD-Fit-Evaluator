@@ -1,11 +1,23 @@
+"use client";
 import { FeatureSteps } from "@/components/feature-section";
 import { FeaturesSectionWithHoverEffects } from "@/components/feature-section-with-hover-effects";
 import { HeroSection } from "@/components/hero-section-1";
 import { Footer } from "@/components/ui/footer";
-import { Github, Hexagon, Twitter } from "lucide-react";
-import React from "react";
+import { Hexagon } from "lucide-react";
+import React, { useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function Main() {
+  const { isSignedIn } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isSignedIn) {
+      router.replace("/dashboard");
+    }
+  }, [isSignedIn, router]);
+
   const features = [
     {
       step: "Step 1",
@@ -44,21 +56,22 @@ export default function Main() {
       <Footer
         logo={<Hexagon className="h-5 w-5" />}
         brandName="Hire Ready"
-        socialLinks={[
-          {
-            icon: <Twitter className="h-5 w-5" />,
-            href: "https://twitter.com",
-            label: "Twitter",
-          },
-          {
-            icon: <Github className="h-5 w-5" />,
-            href: "https://github.com",
-            label: "GitHub",
-          },
-        ]}
+        socialLinks={[]}
         contactEmails={[
           { email: "tipanaboinaajay@gmail.com" },
           { email: "pyatlavishnuvardhan@gmail.com" },
+        ]}
+        githubProfiles={[
+          {
+            name: "Ajay",
+            username: "Ajayy-yadav",
+            href: "https://github.com/Ajayy-yadav",
+          },
+          {
+            name: "Vishnu",
+            username: "Vishnuuu18",
+            href: "https://github.com/Vishnuuu18",
+          },
         ]}
         copyright={{
           text: "© 2025 HireReady-AI",

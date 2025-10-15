@@ -9,7 +9,11 @@ export default function AppProvider({
   children: React.ReactNode;
 }) {
   const pathName = usePathname();
-  if (pathName === "/") {
+  if (
+    pathName === "/" ||
+    pathName.startsWith("/sign-in") ||
+    pathName.startsWith("/sign-up")
+  ) {
     return <>{children}</>;
   }
   return (
