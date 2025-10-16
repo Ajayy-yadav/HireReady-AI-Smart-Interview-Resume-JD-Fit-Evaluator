@@ -105,9 +105,9 @@ export function AppSidebar() {
           <SidebarGroupLabel className="flex gap-2 justify-center items-center py-4 px-2 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:justify-center">
             <div className="relative group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center">
               <Image
-                src="/assets/logo-transparent-svg.svg"
-                height="180"
-                width="180"
+                src="/assets/hire-ready.svg"
+                height="140"
+                width="140"
                 alt="logo"
                 className="transition-all duration-200 hover:scale-105 group-data-[collapsible=icon]:w-6 group-data-[collapsible=icon]:h-6"
               />
@@ -236,7 +236,7 @@ export function AppSidebar() {
                   </div>
                 </div>
 
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-2 group-data-[collapsible=icon]:hidden">
+                <div className="opacity-100 transition-opacity duration-200 mt-2 group-data-[collapsible=icon]:hidden">
                   <Menu />
                 </div>
               </div>

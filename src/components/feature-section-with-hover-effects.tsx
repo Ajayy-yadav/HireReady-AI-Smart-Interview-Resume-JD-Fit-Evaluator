@@ -60,18 +60,18 @@ export function FeaturesSectionWithHoverEffects() {
     },
   ];
   return (
-    <div className="pt-12 Features">
+    <div className="pt-12 Features flex flex-col items-center">
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-10 text-center">
-        Why Choose{" "}
-        <span className="bg-gradient-to-r from-[#000020] via-[#f1ffa5] via-[#469396] via-[#1f3f6d] to-[#000000] bg-clip-text text-transparent">
-          HireReady AI
-        </span>
+      Why Choose{" "}
+      <span className="bg-gradient-to-r from-[#000020] via-[#f1ffa5] via-[#469396] via-[#1f3f6d] to-[#000000] bg-clip-text text-transparent">
+        HireReady AI
+      </span>
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  relative z-10  max-w-7xl mx-auto">
-        {features.map((feature, index) => (
-          <Feature key={feature.title} {...feature} index={index} />
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 relative z-10 max-w-7xl mx-auto w-full justify-items-center">
+      {features.map((feature, index) => (
+        <Feature key={feature.title} {...feature} index={index} />
+      ))}
       </div>
     </div>
   );
