@@ -169,17 +169,17 @@ export function HeroSection() {
                 ...transitionVariants,
               }}
             >
-              <div className="relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
-                <div className="relative mx-auto max-w-7xl  overflow-hidden rounded-2xl border p-4 bg-background">
+                <div className="relative mt-8 overflow-hidden px-2 sm:mt-12 md:mt-20">
+                <div className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl border p-0 bg-background">
                   <HeroVideoDialog
-                    className="block dark:hidden h-auto max-h-[600px] w-full object-contain"
-                    animationStyle="top-in-bottom-out"
-                    videoSrc="/assets/herosection/landingpageupdations.mp4"
-                    thumbnailSrc="/assets/herosection/landingpageupdations.mp4"
-                    thumbnailAlt="HireReady AI Hero Video"
+                  className="block h-auto max-h-[600px] w-full object-contain"
+                  animationStyle="top-in-bottom-out"
+                  videoSrc="/assets/herosection/landingpageupdations.mp4"
+                  thumbnailSrc="/assets/herosection/landingpageupdations.mp4"
+                  thumbnailAlt="HireReady AI Hero Video"
                   />
                 </div>
-              </div>
+                </div>
             </AnimatedGroup>
           </div>
         </section>
@@ -234,8 +234,8 @@ const HeroHeader = () => {
                 {/* <Logo /> */}
                 <Image
                   src="/assets/hire-ready.svg"
-                  height="150"
-                  width="150"
+                  height="140"
+                  width="140"
                   alt="logo"
                 />
                 {/* <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent font-bold">
