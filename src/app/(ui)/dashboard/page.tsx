@@ -64,8 +64,8 @@ export default function DashboardPage() {
     return <span>{timeAgoText}</span>;
   };
   if (!authLoaded || !isLoaded) {
-  return <DashboardSkeleton />;
-}
+    return <DashboardSkeleton />;
+  }
 
   if (!userId) {
     return (
@@ -95,8 +95,8 @@ export default function DashboardPage() {
         </div>
 
         {/* Key Metrics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
+        <div className="flex flex-col md:flex-row justify-around gap-4 md:gap-6">
+          <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] w-full">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-card-foreground">
                 Resume Score
@@ -122,7 +122,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
+          {/* <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-card-foreground">
                 Applications
@@ -135,9 +135,9 @@ export default function DashboardPage() {
                 8 pending responses
               </p>
             </CardContent>
-          </Card>
+          </Card> */}
 
-          <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
+          <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] w-full">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-card-foreground">
                 Interviews
@@ -152,7 +152,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
+          <Card className="border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] w-full">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-card-foreground">
                 Goal Progress
@@ -179,7 +179,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 ">
           {/* Recent Activity */}
           <Card className="lg:col-span-2 border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
             <CardHeader>

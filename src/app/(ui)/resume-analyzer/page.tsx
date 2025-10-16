@@ -205,9 +205,9 @@ export default function ResumeAnalysis() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6">
-          <div className="animate-in slide-in-from-left duration-500">
-            <Card className="shadow-md border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] hover:shadow-lg transition-all duration-300">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 xl:items-start">
+          <div className="animate-in slide-in-from-left duration-500 h-full">
+            <Card className="shadow-md border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] hover:shadow-lg transition-all duration-300 h-full flex flex-col">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <div className="p-1 bg-blue-100 rounded-lg">
@@ -219,51 +219,56 @@ export default function ResumeAnalysis() {
                   Provide your resume and job description for analysis
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="resume"
-                      className="flex items-center gap-2 text-sm font-medium"
-                    >
-                      <FileText className="w-4 h-4 text-gray-600" />
-                      Resume File
-                    </Label>
-                    <div className="relative">
-                      <Input
-                        id="resume"
-                        type="file"
-                        accept=".pdf,.doc,.docx"
-                        onChange={handleFileChange}
-                        className="cursor-pointer h-9 text-sm border-2 border-dashed border-gray-300 hover:border-blue-400 transition-colors duration-200 file:mr-3 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              <CardContent className="space-y-4 flex-1 flex flex-col">
+                <form
+                  onSubmit={handleSubmit}
+                  className="space-y-4 flex-1 flex flex-col"
+                >
+                  <div className="space-y-4 flex-1">
+                    <div className="space-y-2">
+                      <Label
+                        htmlFor="resume"
+                        className="flex items-center gap-2 text-sm font-medium"
+                      >
+                        <FileText className="w-4 h-4 text-gray-600" />
+                        Resume File
+                      </Label>
+                      <div className="relative">
+                        <Input
+                          id="resume"
+                          type="file"
+                          accept=".pdf,.doc,.docx"
+                          onChange={handleFileChange}
+                          className="cursor-pointer h-9 text-sm border-2 border-dashed border-gray-300 hover:border-blue-400 transition-colors duration-200 file:mr-3 file:py-1 file:px-2 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                          required
+                        />
+                      </div>
+                      <p className="text-xs text-gray-500 flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3" />
+                        Supported: PDF, DOC, DOCX (Max 10MB)
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label
+                        htmlFor="jobDescription"
+                        className="flex items-center gap-2 text-sm font-medium"
+                      >
+                        <Target className="w-4 h-4 text-gray-600" />
+                        Job Description
+                      </Label>
+                      <Textarea
+                        id="jobDescription"
+                        value={jobDescription}
+                        onChange={(e) => setJobDescription(e.target.value)}
+                        placeholder="Paste the job description here..."
+                        className="max-h-[250px] text-sm border-2 hover:border-blue-400 focus:border-blue-500 transition-colors  overflow-y-auto duration-200 resize-none"
                         required
                       />
+                      <p className="text-xs text-gray-500">
+                        {jobDescription.length} characters
+                      </p>
                     </div>
-                    <p className="text-xs text-gray-500 flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3" />
-                      Supported: PDF, DOC, DOCX (Max 10MB)
-                    </p>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="jobDescription"
-                      className="flex items-center gap-2 text-sm font-medium"
-                    >
-                      <Target className="w-4 h-4 text-gray-600" />
-                      Job Description
-                    </Label>
-                    <Textarea
-                      id="jobDescription"
-                      value={jobDescription}
-                      onChange={(e) => setJobDescription(e.target.value)}
-                      placeholder="Paste the job description here..."
-                      className="min-h-[120px] text-sm border-2 hover:border-blue-400 focus:border-blue-500 transition-colors duration-200 resize-none"
-                      required
-                    />
-                    <p className="text-xs text-gray-500">
-                      {jobDescription.length} characters
-                    </p>
                   </div>
 
                   <GradientButton
@@ -289,7 +294,7 @@ export default function ResumeAnalysis() {
             </Card>
           </div>
 
-          <div className="space-y-3 animate-in slide-in-from-right duration-500">
+          <div className="space-y-3 animate-in slide-in-from-right duration-500 h-full">
             {result && showResults ? (
               <>
                 <Card className="shadow-md border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] hover:shadow-lg transition-all animate-in fade-in slide-in-from-bottom duration-700">
@@ -387,7 +392,7 @@ export default function ResumeAnalysis() {
               </>
             ) : loading ? (
               /* Loading state */
-              <Card className="shadow-md border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)]">
+              <Card className="shadow-md border border-black/10 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] h-full flex flex-col justify-center">
                 <CardContent className="text-center py-8">
                   <div className="animate-pulse space-y-3">
                     <div className="w-12 h-12 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-full mx-auto animate-spin"></div>
@@ -405,7 +410,7 @@ export default function ResumeAnalysis() {
               </Card>
             ) : (
               /* Empty state */
-              <Card className="shadow-md border-2 border-dashed border-gray-300 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] hover:border-blue-400 transition-all duration-300">
+              <Card className="shadow-md border-2 border-dashed border-gray-300 [background:linear-gradient(180deg,#FFFFFF_0%,#FFFFFF_60%,#F7F7F8_80%,#F2F3F5_100%)] hover:border-blue-400 transition-all duration-300 h-full flex flex-col justify-center">
                 <CardContent className="text-center py-8">
                   <div className="animate-bounce mb-3">
                     <Target className="w-12 h-12 mx-auto text-gray-400" />
