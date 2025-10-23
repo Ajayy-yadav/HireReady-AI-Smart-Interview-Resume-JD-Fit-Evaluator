@@ -103,12 +103,24 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="flex gap-2 justify-center items-center py-4 px-2 group-data-[collapsible=icon]:px-0 group-data-[collapsible=icon]:justify-center">
-            <div className="relative group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center">
+            <div
+              className="relative group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center"
+              onClick={() => router.push("/dashboard")}
+              style={{ cursor: "pointer" }}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  router.push("/dashboard");
+                }
+              }}
+            >
               <Image
                 src="/assets/hire-ready.svg"
-                height="140"
-                width="140"
+                height={140}
+                width={140}
                 alt="logo"
+                onClick={() => router.push("/dashboard")}
                 className="transition-all duration-200 hover:scale-105 group-data-[collapsible=icon]:w-6 group-data-[collapsible=icon]:h-6"
               />
             </div>
@@ -213,8 +225,8 @@ export function AppSidebar() {
                     ) : (
                       <Image
                         src="/assets/User.png"
-                        height="40"
-                        width="40"
+                        height={40}
+                        width={40}
                         alt="userimage"
                         className="rounded-full h-10 w-10 object-cover ring-2 ring-background group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:ring-1"
                       />
@@ -236,7 +248,7 @@ export function AppSidebar() {
                   </div>
                 </div>
 
-                <div className="opacity-100 transition-opacity duration-200 mt-2 group-data-[collapsible=icon]:hidden">
+                <div className="opacity-100 transition-opacity duration-200 mt-2 group-data-[collapsible=icon]:hidden cursor-pointer">
                   <Menu />
                 </div>
               </div>

@@ -169,17 +169,17 @@ export function HeroSection() {
                 ...transitionVariants,
               }}
             >
-                <div className="relative mt-8 overflow-hidden px-2 sm:mt-12 md:mt-20">
+              <div className="relative mt-8 overflow-hidden px-2 sm:mt-12 md:mt-20">
                 <div className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl border p-0 bg-background">
                   <HeroVideoDialog
-                  className="block h-auto max-h-[600px] w-full object-contain"
-                  animationStyle="top-in-bottom-out"
-                  videoSrc="/assets/herosection/landingpageupdations.mp4"
-                  thumbnailSrc="/assets/herosection/landingpageupdations.mp4"
-                  thumbnailAlt="HireReady AI Hero Video"
+                    className="block h-auto max-h-[600px] w-full object-contain"
+                    animationStyle="top-in-bottom-out"
+                    videoSrc="/assets/HR-demo-video.mp4"
+                    thumbnailSrc="/assets/HR-demo-video.mp4"
+                    thumbnailAlt="/assets/HR-demo-video.mp4"
                   />
                 </div>
-                </div>
+              </div>
             </AnimatedGroup>
           </div>
         </section>
